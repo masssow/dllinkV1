@@ -1,0 +1,145 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un compte — DahiraLink{% endblock %}
+
+{% block body %}
+<section class="dl-auth-page py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-xl-5">
+
+                <div class="text-center mb-4">
+                       <img
+                        src="{{ asset('images/logo-dahiralink.png') }}"
+                        alt="DahiraLink"
+                        class="dl-auth-logo mb-3" style="max-width: 150px; height: auto;"
+                    >
+
+                    <span class="badge rounded-pill px-3 py-2 mb-3 text-bg-success-subtle text-success fw-semibold">
+                        Rejoindre la communauté
+                    </span>
+
+                    <h1 class="fw-bold mb-3">Créer un compte</h1>
+
+                    <p class="text-muted mb-0">
+                        Rejoignez votre Dahira, participez plus facilement aux lectures collectives
+                        et gardez le lien avec simplicité.
+                    </p>
+                </div>
+
+                <div class="dl-auth-card shadow-sm rounded-4 p-4 p-md-5 bg-white">
+
+                    {{ form_start(registrationFormType, { attr: { class: 'dl-form' } }) }}
+
+                        <div class="dl-field mb-3">
+                            {{ form_label(registrationFormType.fullName, null, { label_attr: { class: 'form-label fw-semibold' } }) }}
+                            {{ form_widget(registrationFormType.fullName, {
+                                attr: {
+                                    class: 'form-control dl-input',
+                                    placeholder: 'Votre nom complet'
+                                }
+                            }) }}
+                            <div class="small text-danger mt-1">
+                                {{ form_errors(registrationFormType.fullName) }}
+                            </div>
+                        </div>
+
+                        <div class="dl-field mb-3">
+                            {{ form_label(registrationFormType.email, null, { label_attr: { class: 'form-label fw-semibold' } }) }}
+                            {{ form_widget(registrationFormType.email, {
+                                attr: {
+                                    class: 'form-control dl-input',
+                                    placeholder: 'exemple@email.com'
+                                }
+                            }) }}
+                            <div class="small text-danger mt-1">
+                                {{ form_errors(registrationFormType.email) }}
+                            </div>
+                        </div>
+
+                        <div class="dl-field mb-3">
+                            {{ form_label(registrationFormType.plainPassword.first, null, { label_attr: { class: 'form-label fw-semibold' } }) }}
+                            {{ form_widget(registrationFormType.plainPassword.first, {
+                                attr: {
+                                    class: 'form-control dl-input',
+                                    placeholder: 'Créer un mot de passe'
+                                }
+                            }) }}
+                            <div class="small text-danger mt-1">
+                                {{ form_errors(registrationFormType.plainPassword.first) }}
+                            </div>
+                        </div>
+
+                        <div class="dl-field mb-3">
+                            {{ form_label(registrationFormType.plainPassword.second, null, { label_attr: { class: 'form-label fw-semibold' } }) }}
+                            {{ form_widget(registrationFormType.plainPassword.second, {
+                                attr: {
+                                    class: 'form-control dl-input',
+                                    placeholder: 'Confirmer le mot de passe'
+                                }
+                            }) }}
+                            <div class="small text-danger mt-1">
+                                {{ form_errors(registrationFormType.plainPassword.second) }}
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="dl-field mb-3">
+                                    {{ form_label(registrationFormType.city, null, { label_attr: { class: 'form-label fw-semibold' } }) }}
+                                    {{ form_widget(registrationFormType.city, {
+                                        attr: {
+                                            class: 'form-control dl-input',
+                                            placeholder: 'Votre ville'
+                                        }
+                                    }) }}
+                                    <div class="small text-danger mt-1">
+                                        {{ form_errors(registrationFormType.city) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="dl-field mb-3">
+                                    {{ form_label(registrationFormType.country, null, { label_attr: { class: 'form-label fw-semibold' } }) }}
+                                    {{ form_widget(registrationFormType.country, {
+                                        attr: {
+                                            class: 'form-control dl-input'
+                                        }
+                                    }) }}
+                                    <div class="small text-danger mt-1">
+                                        {{ form_errors(registrationFormType.country) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{ form_widget(registrationFormType.hp) }}
+
+                        <button type="submit" class="btn btn-success btn-lg w-100 rounded-pill py-3 fw-semibold mt-2">
+                            Créer mon compte
+                        </button>
+
+                    {{ form_end(registrationFormType) }}
+
+                    <div class="text-center mt-4">
+                        <p class="text-muted mb-0">
+                            Déjà un compte ?
+                            <a href="{{ path('app_login') }}" class="fw-semibold text-success text-decoration-none">
+                                Se connecter
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <p class="small text-muted mb-0">
+                        Un compte simple pour mieux participer, partager et suivre vos initiatives collectives.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

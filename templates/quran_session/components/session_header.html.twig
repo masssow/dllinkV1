@@ -1,0 +1,62 @@
+<h4 class="mb-3">Participer au Khatm</h4>
+
+<form method="post"
+action="{{ path('app_quran_session_participate',{slug:session.slug}) }}">
+
+<input type="hidden"
+name="_token"
+value="{{ csrf_token('participate' ~ session.slug) }}">
+
+<div class="mb-3">
+
+<input
+type="text"
+name="participant"
+class="form-control dl-input"
+placeholder="Votre nom"
+required
+>
+
+</div>
+
+<div class="mb-3">
+
+<select name="hizb" class="form-control dl-input" required>
+
+<option value="">Choisir un hizb</option>
+
+{% for a in assignments %}
+{% if not a.participantName %}
+<option value="{{ a.juzNumber }}">
+Hizb {{ a.juzNumber }}
+</option>
+{% endif %}
+{% endfor %}
+
+</select>
+
+</div>
+
+<button class="btn btn-primary w-100">
+Participer
+</button>
+
+</form>
+
+<hr>
+
+<label class="mt-3"><strong>Lien de partage</strong></label>
+
+<input
+type="text"
+class="form-control dl-input"
+readonly
+value="{{ url('app_quran_session_public_show',{slug:session.slug}) }}"
+>
+
+<button
+class="btn btn-outline-secondary w-100 mt-2"
+onclick="navigator.clipboard.writeText('{{ url('app_quran_session_public_show',{slug:session.slug}) }}')"
+>
+Copier le lien
+</button>

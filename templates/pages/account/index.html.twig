@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-end mb-3">
+
+        {% if app.user %}
+            <a href="{{ path('app_logout') }}"
+            class="btn btn-secondary btn-sm">
+            Se déconnecter
+            </a>
+        {% endif %}
+
+    </div>
+
+<h2>Mes sessions</h2>
+
+{% if sessions is empty %}
+
+<p>Aucune session créée.</p>
+
+{% endif %}
+
+<div class="row">
+
+{% for session in sessions %}
+
+{% set stat = sessionStats[session.id] %}
+<div class="col-md-6 mb-4">
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<h5 class="card-title">
+{{ session.title }}
+</h5>
+
+<p class="mb-1">
+<strong>Type :</strong> {{ session.type }}
+</p>
+
+<p class="mb-1">
+<strong>Créé le :</strong>
+{{ session.createdAt|date('d/m/Y') }}
+</p>
+
+<p class="mb-2">
+<strong>Prévu :</strong>
+{{ session.scheduledAt ? session.scheduledAt|date('d/m/Y') : 'Non défini' }}
+</p>
+
+<div class="progress mb-2" style="height:20px">
+
+<div
+class="progress-bar bg-success"
+style="width: {{ stat.percent }}%"
+>
+
+{{ stat.percent }}%
+
+</div>
+
+</div>
+
+<p class="mb-2">
+{{ stat.completed }} / {{ stat.total }} hizb complétés
+</p>
+
+{% if session.expiresAt > "now"|date %}
+
+<a
+href="{{ path('app_quran_session_public_show',{slug:session.slug}) }}"
+class="btn btn-primary btn-sm"
+>
+Accéder
+</a>
+
+{% else %}
+
+<span class="badge bg-secondary">
+Session expirée
+</span>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}

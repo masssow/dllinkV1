@@ -1,0 +1,23 @@
+{# Page Sub Navigation
+    utilisation:
+    {% include 'components/_page_subnav.html.twig' with {
+    items: [
+        { label: 'Notre intention', href: '#mission' },
+        { label: 'Fonctionnalités', href: '#features' },
+        { label: 'Valeurs', href: '#values' },
+        { label: 'Commencer', href: '#cta', primary: true }
+        ]
+    } %}
+ #}
+<section class="py-3 bg-white border-bottom sticky-top" style="z-index: 10;">
+    <div class="container">
+        <div class="d-flex flex-wrap justify-content-center gap-2 gap-md-3">
+            {% for item in items %}
+                <a href="{{ item.href }}"
+                   class="btn btn-sm {{ item.primary|default(false) ? 'btn-success' : 'btn-outline-success' }} rounded-pill px-3">
+                    {{ item.label }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>

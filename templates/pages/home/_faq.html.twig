@@ -1,0 +1,89 @@
+<section class="py-5 bg-light">
+    <div class="container">
+
+        {% include 'components/_section_heading.html.twig' with {
+            eyebrow: 'Questions fréquentes',
+            title: '',
+            text: 'Voici quelques réponses simples pour mieux comprendre DahiraLink.'
+        } %}
+
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="accordion" id="homeFaqAccordion">
+
+                    <div class="accordion-item border rounded-4 mb-3 overflow-hidden">
+                        <h2 class="accordion-header" id="faqOneHeading">
+                            <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faqOne" aria-expanded="false" aria-controls="faqOne">
+                                À quoi sert DahiraLink ?
+                            </button>
+                        </h2>
+                        <div id="faqOne" class="accordion-collapse collapse" aria-labelledby="faqOneHeading" data-bs-parent="#homeFaqAccordion">
+                            <div class="accordion-body text-muted">
+                                DahiraLink aide à organiser plus clairement les lectures collectives, les khatms et les initiatives partagées en communauté.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border rounded-4 mb-3 overflow-hidden">
+                        <h2 class="accordion-header" id="faqTwoHeading">
+                            <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">
+                                Est-ce que DahiraLink remplace WhatsApp ?
+                            </button>
+                        </h2>
+                        <div id="faqTwo" class="accordion-collapse collapse" aria-labelledby="faqTwoHeading" data-bs-parent="#homeFaqAccordion">
+                            <div class="accordion-body text-muted">
+                                Non. DahiraLink complète les usages déjà présents sur WhatsApp en apportant une meilleure organisation, une répartition plus claire et un suivi plus simple.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border rounded-4 mb-3 overflow-hidden">
+                        <h2 class="accordion-header" id="faqThreeHeading">
+                            <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faqThree" aria-expanded="false" aria-controls="faqThree">
+                                Est-ce facile à utiliser ?
+                            </button>
+                        </h2>
+                        <div id="faqThree" class="accordion-collapse collapse" aria-labelledby="faqThreeHeading" data-bs-parent="#homeFaqAccordion">
+                            <div class="accordion-body text-muted">
+                                Oui. La plateforme a été pensée pour rester simple, notamment sur téléphone, avec un parcours fluide et compréhensible.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border rounded-4 mb-3 overflow-hidden">
+                        <h2 class="accordion-header" id="faqFourHeading">
+                            <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faqFour" aria-expanded="false" aria-controls="faqFour">
+                                Faut-il être à l’aise avec le numérique ?
+                            </button>
+                        </h2>
+                        <div id="faqFour" class="accordion-collapse collapse" aria-labelledby="faqFourHeading" data-bs-parent="#homeFaqAccordion">
+                            <div class="accordion-body text-muted">
+                                Non. L’idée de DahiraLink est justement de rendre ces usages accessibles au plus grand nombre.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border rounded-4 overflow-hidden">
+                        <h2 class="accordion-header" id="faqFiveHeading">
+                            <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faqFive" aria-expanded="false" aria-controls="faqFive">
+                                Peut-on partager une session facilement ?
+                            </button>
+                        </h2>
+                        <div id="faqFive" class="accordion-collapse collapse" aria-labelledby="faqFiveHeading" data-bs-parent="#homeFaqAccordion">
+                            <div class="accordion-body text-muted">
+                                Oui. Une session peut être partagée facilement par lien, notamment dans WhatsApp, afin de garder une diffusion simple et naturelle.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="text-center mt-5">
+                    {# <a href="{{ path('app_contact') }}" class="btn btn-outline-success rounded-pill px-4"> #}
+                        {# Poser une question #}
+                    {# </a> #}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

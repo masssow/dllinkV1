@@ -1,0 +1,54 @@
+<section class="py-5">
+    <div class="container">
+
+        {% include 'components/_section_heading.html.twig' with {
+            eyebrow: 'Ce que permet DahiraLink',
+            title: 'Une manière plus simple d’organiser et partager',
+            text: 'DahiraLink aide à structurer les lectures collectives tout en restant facile à utiliser et à diffuser.'
+        } %}
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                {% include 'components/_feature_card.html.twig' with {
+                    icon: '📖',
+                    title: 'Créer une session claire',
+                    text: 'Lancez un khatm ou une lecture collective avec une structure simple et lisible.'
+                } %}
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                {% include 'components/_feature_card.html.twig' with {
+                    icon: '🤝',
+                    title: 'Répartir les participations',
+                    text: 'Permettez à chacun de choisir sa contribution sans confusion ni doublon.'
+                } %}
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                {% include 'components/_feature_card.html.twig' with {
+                    icon: '📲',
+                    title: 'Partager facilement sur WhatsApp',
+                    text: 'Diffusez le lien de la session dans vos groupes et conversations sans compliquer les habitudes.'
+                } %}
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                {% include 'components/_feature_card.html.twig' with {
+                    icon: '🌙',
+                    title: 'Suivre l’avancement',
+                    text: 'Visualisez la progression et gardez une meilleure visibilité sur la participation.'
+                } %}
+            </div>
+        </div>
+
+        <div class="d-flex flex-column align-items-center gap-3 mt-4">
+            <a href="..." class="btn btn-success rounded-pill px-4">
+                Commencer maintenant
+            </a>
+
+            <a href="..." class="btn btn-outline-dark rounded-pill px-4">
+                Comprendre l’esprit du projet
+            </a>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,42 @@
+{# Call to action block
+    Utilisation:
+        {% include 'components/_cta_block.html.twig' with {
+        title: 'La communauté fait vivre DahiraLink',
+        text: 'Chaque session créée, chaque partage et chaque participation contribuent à faire vivre une dynamique utile.',
+        primary_href: path('app_session_new'),
+        primary_label: 'Créer une session',
+        secondary_href: path('app_contact'),
+        secondary_label: 'Nous écrire'
+        } %}
+ #}
+<section class="py-5 {{ section_class|default('bg-success text-white') }}">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 col-xl-8 text-center">
+
+                <h2 class="fw-bold mb-3">
+                    {{ title }}
+                </h2>
+
+                {% if text is defined and text %}
+                    <p class="mb-4 opacity-75">
+                        {{ text }}
+                    </p>
+                {% endif %}
+
+                <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                    <a href="{{ primary_href }}" class="btn {{ primary_btn_class|default('btn-light') }} btn-lg rounded-pill px-4">
+                        {{ primary_label }}
+                    </a>
+
+                    {% if secondary_href is defined and secondary_label is defined %}
+                        <a href="{{ secondary_href }}" class="btn {{ secondary_btn_class|default('btn-outline-light') }} btn-lg rounded-pill px-4">
+                            {{ secondary_label }}
+                        </a>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

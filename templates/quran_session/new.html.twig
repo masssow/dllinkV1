@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une session - DahiraLink{% endblock %}
+
+{% block body %}
+
+<section class="dl-page-hero py-5">
+    <div class="container">
+        <div class="text-center">
+            <span class="dl-eyebrow">Nouvelle session</span>
+            <h1 class="dl-page-title mt-2">Créer un khatm ou une du‘a</h1>
+            <p class="dl-page-subtitle mt-3">
+                Organisez facilement une session spirituelle, partagez le lien
+                et suivez la participation de votre communauté.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="intro-news-area pb-5">
+    <div class="container">
+        <div class="row g-4 justify-content-center align-items-start">
+
+            <div class="col-12 col-lg-7">
+                <div class="dl-form-card">
+
+                    <div class="dl-card-head mb-4">
+                        <span class="post-date">Formulaire</span>
+                        <h3 class="post-title mb-2">Informations de la session</h3>
+                        <p class="mb-0 text-muted">
+                            Remplissez les champs ci-dessous pour générer une session partageable.
+                        </p>
+                    </div>
+
+                    {{ form_start(form) }}
+
+                    <div class="dl-form-group mb-3">
+                        {{ form_label(form.type, null, {'label_attr': {'class': 'dl-label'}}) }}
+                        {{ form_widget(form.type, {'attr': {'class': 'form-control dl-input'}}) }}
+                        {{ form_errors(form.type) }}
+                    </div>
+
+                    <div class="dl-form-group mb-3">
+                        {{ form_label(form.title, null, {'label_attr': {'class': 'dl-label'}}) }}
+                        {{ form_widget(form.title, {'attr': {
+                            'class': 'form-control dl-input',
+                            'placeholder': 'Ex. Khatm du vendredi - Dahira Touba Drancy'
+                        }}) }}
+                        {{ form_errors(form.title) }}
+                    </div>
+
+                    <div class="dl-form-group mb-3">
+                        {{ form_label(form.description, null, {'label_attr': {'class': 'dl-label'}}) }}
+                        {{ form_widget(form.description, {'attr': {
+                            'class': 'form-control dl-input dl-textarea',
+                            'rows': 4,
+                            'placeholder': 'Décrivez l’intention, le contexte ou les consignes de la session...'
+                        }}) }}
+                        {{ form_errors(form.description) }}
+                    </div>
+
+                    <div class="dl-form-group mb-4">
+                        {{ form_label(form.scheduledAt, null, {'label_attr': {'class': 'dl-label'}}) }}
+                        {{ form_widget(form.scheduledAt, {'attr': {'class': 'form-control dl-input'}}) }}
+                        {{ form_errors(form.scheduledAt) }}
+                    </div>
+
+                    <div class="dl-form-actions">
+                        <button type="submit" class="btn btn-primary dl-submit-btn w-100">
+                            Créer la session
+                        </button>
+                    </div>
+
+                    {{ form_end(form) }}
+
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-5">
+                <div class="dl-side-card mb-4">
+                    <h5 class="dl-side-title">Ce qui se passe après création</h5>
+
+                    <div class="dl-step-list">
+                        <div class="dl-step-item">
+                            <div class="dl-step-badge">1</div>
+                            <div>
+                                <strong>Session générée</strong>
+                                <p class="mb-0">Un lien public est créé automatiquement pour votre session.</p>
+                            </div>
+                        </div>
+
+                        <div class="dl-step-item">
+                            <div class="dl-step-badge">2</div>
+                            <div>
+                                <strong>Partage rapide</strong>
+                                <p class="mb-0">Les participants rejoignent la session et choisissent un hizb libre.</p>
+                            </div>
+                        </div>
+
+                        <div class="dl-step-item">
+                            <div class="dl-step-badge">3</div>
+                            <div>
+                                <strong>Suivi de progression</strong>
+                                <p class="mb-0">Vous visualisez l’avancement du khatm en temps réel.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dl-side-card dl-side-card-soft">
+                    <h5 class="dl-side-title">Conseil</h5>
+                    <p class="mb-0">
+                        Choisissez un titre clair et une date précise pour aider les membres
+                        à identifier rapidement la session dans DahiraLink.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

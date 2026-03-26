@@ -1,0 +1,24 @@
+{# Section Heading :
+    utilisation: {% include 'components/_section_heading.html.twig' with {
+        eyebrow: 'Ce que permet la plateforme',
+        title: 'Un outil simple pour agir ensemble',
+        text: 'DahiraLink a été pensé pour rester accessible, clair et utile.'
+    } %}
+ #}
+<div class="text-center mx-auto mb-5" style="max-width: 720px;">
+    {% if eyebrow is defined and eyebrow %}
+        <span class="text-success fw-semibold text-uppercase small">
+            {{ eyebrow }}
+        </span>
+    {% endif %}
+
+    <h2 class="fw-bold mt-2">
+        {{ title }}
+    </h2>
+
+    {% if text is defined and text %}
+        <p class="text-muted mt-3 mb-0">
+            {{ text }}
+        </p>
+    {% endif %}
+</div>

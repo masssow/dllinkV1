@@ -1,0 +1,36 @@
+<div class="khatm-progress mt-4">
+
+<h5>Progression du Khatm</h5>
+
+<div class="progress" style="height:25px">
+
+<div
+class="progress-bar bg-success"
+style="width: {{ percent }}%"
+>
+
+{{ percent }}%
+
+</div>
+
+</div>
+
+<p class="mt-2">
+{{ completed }} / {{ total }} hizb complétés
+</p>
+
+</div>
+
+<hr>
+
+<h6>Hizbs restants</h6>
+
+<ul>
+
+{% for a in assignments %}
+{% if not a.participantName %}
+<li>Hizb {{ a.juzNumber }}</li>
+{% endif %}
+{% endfor %}
+
+</ul>

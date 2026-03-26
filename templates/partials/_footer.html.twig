@@ -1,0 +1,81 @@
+<footer class="dl-site-footer pt-5 pb-4 bg-light border-top mt-0">
+    <div class="container">
+
+        <div class="row gy-4">
+
+            <div class="col-md-4">
+                <div class="footer-brand pe-md-4">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        {# <img
+                            src="{{ asset('images/logo-dahiralink.png') }}"
+                            alt="DahiraLink"
+                            class="dl-footer-logo"
+                            style="max-width: 100px; height: auto;"
+                        > #}
+                        <h5 class="mb-0 fw-bold">DahiraLink</h5>
+                    </div>
+
+                    <p class="text-muted mb-3">
+                        Une plateforme pensée pour mieux organiser les lectures collectives,
+                        les khatms et les initiatives partagées en communauté.
+                    </p>
+
+                    <p class="small text-muted mb-0">
+                        Simple à partager, facile à suivre, utile au quotidien.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <h6 class="footer-title fw-bold mb-3">Navigation</h6>
+
+                <ul class="footer-links list-unstyled mb-0">
+                    <li class="mb-2"><a href="{{ path('app_home') }}">Accueil</a></li>
+                    <li class="mb-2"><a href="{{ path('app_quran_session_new') }}">Créer un khatm</a></li>
+                    <li class="mb-2"><a href="{{ path('app_about') }}">À propos</a></li>
+                    <li class="mb-2"><a href="{{ path('app_contact') }}">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-4">
+                <h6 class="footer-title fw-bold mb-3">Informations</h6>
+
+                <ul class="footer-links list-unstyled mb-0">
+                    <li class="mb-2"><a href="{{ path('app_legalicy') }}">Mentions légales</a></li>
+                    <li class="mb-2"><a href="{{ path('app_login') }}">Se connecter</a></li>
+                    <li class="mb-2"><a href="{{ path('app_registration') }}">Créer un compte</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row gy-3 align-items-center">
+            <div class="col-md-7">
+                <small class="text-muted d-block">
+                    © {{ "now"|date("Y") }} DahiraLink — Tous droits réservés
+                </small>
+                <small class="text-muted d-block mt-1">
+                    Pensé avec simplicité pour accompagner les initiatives utiles de la communauté.
+                </small>
+            </div>
+
+            <div class="col-md-5 text-md-end">
+                <small class="text-muted d-block">
+                    Créez, partagez et suivez vos sessions plus facilement.
+                </small>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <small class="text-muted">
+                Crédits images :
+                <a href="https://pixabay.com/fr/users/joko_narimo-3032599/" target="_blank" rel="noopener noreferrer">Joko Narimo</a>,
+                <a href="https://pixabay.com/users/abdullah_shakoor-123456/" target="_blank" rel="noopener noreferrer">Abdullah Shakoor</a>,
+                <a href="https://pixabay.com/fr/users/kolaoltion-16160874/" target="_blank" rel="noopener noreferrer">Kolaoltion</a>
+            </small>
+        </div>
+
+    </div>
+</footer>

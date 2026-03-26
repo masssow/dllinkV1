@@ -1,0 +1,30 @@
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<h5>{{ session.title }}</h5>
+
+<p class="mb-1">
+{{ session.type }}
+</p>
+
+<p class="mb-1">
+créé le {{ session.createdAt|date('d/m/Y') }}
+</p>
+
+<p class="mb-2">
+prévu {{ session.scheduledAt ? session.scheduledAt|date('d/m/Y') : 'non défini' }}
+</p>
+
+<a
+href="{{ path('app_quran_session_public_show',{slug:session.slug}) }}"
+class="btn btn-sm btn-primary"
+>
+
+Ouvrir
+
+</a>
+
+</div>
+
+</div>

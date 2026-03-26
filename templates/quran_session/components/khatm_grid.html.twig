@@ -1,0 +1,58 @@
+<h5>Grille du Khatm</h5>
+
+<div class="khatm-grid">
+
+{% for a in assignments %}
+
+<div
+id="hizb-{{ a.juzNumber }}"
+data-id="{{ a.id }}"
+data-juz="{{ a.juzNumber }}"
+class="hizb-card
+{% if a.isCompleted %}
+hizb-completed
+{% elseif a.participantName %}
+hizb-assigned
+{% else %}
+hizb-free
+{% endif %}"
+
+{% if a.participantName %}
+onclick="toggleHizb(this)"
+style="cursor:pointer"
+{% endif %}
+>
+
+<strong>Hizb {{ a.juzNumber }}</strong>
+
+<div class="participant">
+
+{% if a.participantName %}
+{{ a.participantName }}
+{% else %}
+Libre
+{% endif %}
+
+</div>
+
+{% if a.participantName and not a.isCompleted %}
+
+<div class="hizb-action">
+Terminer ce Hizb
+</div>
+
+{% endif %}
+
+{% if a.isCompleted %}
+
+<div class="hizb-done">
+✔ Terminé
+</div>
+
+{% endif %}
+
+</div>
+
+{% endfor %}
+
+</div>
