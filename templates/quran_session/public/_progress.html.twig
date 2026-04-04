@@ -1,0 +1,28 @@
+<div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+    <h5 class="fw-semibold mb-3">Progression</h5>
+
+    {% if session.type == 'khatm' %}
+        {% set percent = session.totalTarget > 0 ? ((completedCount / session.totalTarget) * 100)|round : 0 %}
+
+        <div class="progress mb-3" style="height: 14px;">
+            <div id="khatm-progress-bar" class="progress-bar bg-success" style="width: {{ percent }}%;">
+                <span id="khatm-progress-percent">{{ percent }}%</span>
+            </div>
+        </div>
+
+        <p id="khatm-progress-text" class="mb-0 text-muted">
+            {{ completedCount }} / {{ session.totalTarget }} hizb complétés
+        </p>
+
+    {% elseif session.type == 'dua' %}
+        <div class="progress mb-3" style="height: 14px;">
+            <div class="progress-bar bg-success" style="width: {{ duaPercent }}%;">
+                {{ duaPercent }}%
+            </div>
+        </div>
+
+        <p class="mb-0 text-muted">
+            {{ duaTotalDone }} / {{ session.totalTarget }} répétitions réalisées
+        </p>
+    {% endif %}
+</div>

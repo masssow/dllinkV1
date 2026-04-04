@@ -1,99 +1,95 @@
-<footer class="footer-area">
-            <div class="container">
+{% extends 'base.html.twig' %}
 
-                <div class="row gy-4">
+{% block title %}Session {{ session.title }} - DahiraLink{% endblock %}
 
-                    <div class="col-md-4">
+{% block body %}
 
-                        <div class="footer-brand">
-                            <img src="{{ asset('images/logo-dahiralink.png') }}" height="40">
-                            <h5 class="mt-2">DahiraLink</h5>
-                            <p>
-                            Plateforme dédiée aux dahiras pour organiser les lectures collectives du Coran,
-                            suivre les khatm et renforcer les liens communautaires.
-                            </p>
-                        </div>
+{% set total = session.totalTarget ?? 0 %}
+{% set completed = completedCount ?? 0 %}
+{% set percent = total > 0 ? (completed / total * 100)|round : 0 %}
 
-                    </div>
+<section class="dl-session-hero py-5">
 
-                    <div class="col-md-4">
+<div class="container">
 
-                        <h6 class="footer-title">Navigation</h6>
+<div class="text-center">
 
-                        <ul class="footer-links">
+<span class="dl-eyebrow">Session spirituelle</span>
 
-                            <li><a href="{{ path('app_home') }}">Accueil</a></li>
+<h1 class="dl-session-title mt-2">
+{{ session.title }}
+</h1>
 
-                            <li><a href="{{ path('app_quran_session_new') }}">Créer un Khatm</a></li>
+<p class="dl-session-meta">
 
-                            {# <li><a href="{{ path('app_session_join') }}">Rejoindre une session</a></li> #}
+{{ session.type }}
 
-                            <li><a href="#">Dahiras</a></li>
+{% if session.scheduledAt %}
+• {{ session.scheduledAt|date('d/m/Y H:i') }}
+{% endif %}
 
-                        </ul>
+</p>
 
-                    </div>
+{% if session.description %}
+<p class="dl-session-description mt-3">
+{{ session.description }}
+</p>
+{% endif %}
 
-                    <div class="col-md-4">
+</div>
 
-                        <h6 class="footer-title">Informations</h6>
+</div>
 
-                                    <ul class="footer-links">
+</section>
 
-                                        <li><a href="{{ path('app_about') }}">À propos</a></li>
+<section class="pb-5">
 
-                                        <li><a href="{{ path('app_contact') }}">Contact</a></li>
+<div class="container">
 
-                                        <li><a href="{{ path('app_legalicy') }}">Mentions légales</a></li>
+<div class="row g-4">
 
-                                    </ul>
+<div class="col-lg-8">
 
-                    </div>
+<div class="dl-card">
 
-                </div>
+{% include 'quran_session/components/khatm_grid.html.twig' %}
 
-                <hr class="my-4">
+</div>
 
-                <div class="text-center mb-2">
+<div class="dl-card mt-4">
 
-                    <small class="text-muted">
+{% include 'quran_session/components/khatm_progress.html.twig' %}
 
-                    Images utilisées sur ce site :
+</div>
 
-                    <br>
+</div>
 
-                    Photo par 
-                    <a href="https://pixabay.com/fr/users/joko_narimo-3032599/" target="_blank">
-                    Joko Narimo
-                    </a> — Pixabay
+<div class="col-lg-4">
 
-                    <br>
+<div class="dl-card">
 
-                    Photo par 
-                    <a href="https://pixabay.com/users/abdullah_shakoor-123456/" target="_blank">
-                    Abdullah Shakoor
-                    </a> — Pixabay
+{% include 'quran_session/components/session_header.html.twig' %}
 
-                    <br>
+</div>
 
-                    Photo par 
-                    <a href="https://pixabay.com/fr/users/kolaoltion-16160874/" target="_blank">
-                    Pexels
-                    </a> Kolaoltion — Pixabay
+</div>
 
-                    </small>
+</div>
 
-                </div>
+</div>
 
-                <div class="text-center">
+</section>
 
-                    <p class="mb-0">
+<script>
 
-                    © {{ "now"|date("Y") }} DahiraLink — Tous droits réservés
+window.khatmConfig = {
+    sessionSlug: "{{ session.slug }}",
+    sessionStateUrl: "{{ path('app_session_state', {'slug': session.slug}) }}",
+    toggleUrlBase: "/api/hizb/toggle/"
+}
 
-                    </p>
+</script>
 
-                </div>
+<script src="/js/khatmAnimation.js"></script>
 
-            </div>
-        </footer>
+{% endblock %}

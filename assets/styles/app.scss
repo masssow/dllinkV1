@@ -91,6 +91,37 @@ footer {
         padding-bottom: 0.9rem;
     }
 
+        .dl-type-panel {
+            transition: all 0.25s ease;
+        }
+    
+        #dua-fields-block,
+        #khatm-info-block {
+            display: none;
+        }
+    
+        .dl-session-form .form-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+    
+        .dl-session-form .form-control,
+        .dl-session-form .form-select,
+        .dl-session-form textarea {
+            border-radius: 1rem;
+            padding: 0.9rem 1rem;
+            border: 1px solid #dee2e6;
+        }
+    
+        @media (max-width: 576px) {
+    
+            .dl-session-form .form-control,
+            .dl-session-form .form-select,
+            .dl-session-form textarea {
+                font-size: 1rem;
+            }
+        }
+
     .navbar-brand {
         font-size: 1rem;
         font-weight: 700;
@@ -260,6 +291,8 @@ footer {
     color: #146c43;
 }
 
+
+
 /* ======================
    header - footer
 ======================= */
@@ -344,8 +377,219 @@ footer {
 }
 
 /* ======================
+   shared session khatm styles
+====================== */
+
+.dl-share-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.dl-btn-share-main {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 999px;
+    padding: 0.95rem 1.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    background: #1f8f57;
+    border: none;
+    color: #fff;
+    box-shadow: 0 10px 24px rgba(31, 143, 87, 0.18);
+    transition: all 0.2s ease;
+}
+
+.dl-btn-share-main:hover {
+    background: #187548;
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.dl-share-actions__secondary {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.dl-btn-share-secondary {
+    border-radius: 999px;
+    padding: 0.7rem 1.15rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+    background: rgba(255, 255, 255, 0.92);
+    color: #1d2b2a;
+    border: 1px solid rgba(29, 43, 42, 0.15);
+    min-width: 150px;
+    transition: all 0.2s ease;
+}
+
+.dl-btn-share-secondary:hover {
+    background: #fff;
+    color: #111;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 576px) {
+    .dl-btn-share-main {
+        max-width: 100%;
+        font-size: 0.98rem;
+        padding: 0.9rem 1.2rem;
+    }
+
+    .dl-share-actions__secondary {
+        width: 100%;
+        gap: 0.6rem;
+    }
+
+    .dl-btn-share-secondary {
+        flex: 1 1 calc(50% - 0.3rem);
+        min-width: unset;
+        padding: 0.72rem 1rem;
+        font-size: 0.92rem;
+    }
+}
+
+/* ======================
    Forms session khatm
 ====================== */
+
+.dl-session-hero-wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 100%;   
+    border-radius: 2rem;
+    padding: 2rem 1.25rem;
+    min-height: 320px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dl-session-hero-overlay {
+    width: 100%;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center ;
+    align-items: center;
+    padding: 2rem 1rem;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.30),
+            rgba(0, 0, 0, 0.55));
+
+text-align: center;
+
+}
+
+.dl-session-hero-title {
+    color: #fff;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+    max-width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.dl-session-hero-description {
+    color: rgba(255, 255, 255, 0.92) !important;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+.dl-session-hero__meta {
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+    .dl-session-hero-wrapper {
+        min-height: 360px;
+        animation: dlHeroFadeIn 0.7s ease;
+        @keyframes dlHeroFadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(12px);
+                }
+        
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .dl-session-hero-overlay {
+                min-height: 290px;
+                padding: 2rem 1rem;
+            }
+
+            .dl-session-hero-title {
+                font-size: 1.8rem;
+            }
+
+            .dl-session-hero-description {
+                font-size: 0.97rem;
+                line-height: 1.6;
+            }
+
+            .dl-session-hero__meta {
+                font-size: 0.9rem;
+            }
+    }
+    
+        @media (max-width: 992px) {
+            .dl-session-hero-wrapper {
+                min-height: 290px;
+            }
+    
+            .dl-session-hero-overlay {
+                min-height: 290px;
+                padding: 2rem 1rem;
+            }
+        }
+
+                @media (max-width: 768px) {
+                    .dl-session-hero-wrapper {
+                        min-height: 250px;
+                    }
+        
+                    .dl-session-hero-overlay {
+                        min-height: 250px;
+                        padding: 1.75rem 1rem;
+                    }
+        
+                    .dl-session-hero-title {
+                        font-size: 1.8rem;
+                    }
+        
+                    .dl-session-hero-description {
+                        font-size: 0.96rem;
+                        line-height: 1.6;
+                    }
+        
+                    .dl-session-hero__meta {
+                        font-size: 0.9rem;
+                    }
+                }
+
+    
+}
+
+.dl-session-hero__meta {
+    color: rgba(255, 255, 255, 0.84);
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+}
+
 .dl-page-hero {
     background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
 }
@@ -457,17 +701,154 @@ footer {
     font-size: 0.95rem;
 }
 
-@media (max-width: 767.98px) {
-    .dl-page-title {
-        font-size: 1.6rem;
+.dl-public-session-page {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+}
+
+.dl-public-session-page .card {
+    border-radius: 1.5rem !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dl-public-session-page .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08) !important;
+}
+
+.dl-public-section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1f2e2b;
+    margin-bottom: 1rem;
+}
+
+.dl-public-section-subtitle {
+    color: #6c757d;
+    font-size: 0.95rem;
+    margin-bottom: 0;
+}
+
+.dl-soft-card {
+    background: #fff;
+    border: 1px solid rgba(31, 46, 43, 0.06);
+}
+
+.dl-soft-muted {
+    color: #6c757d;
+}
+
+.dl-soft-success {
+    color: #1f8f57;
+}
+
+.dl-progress-card {
+    background: linear-gradient(180deg, #f7fbf8 0%, #eef8f1 100%);
+    border: 1px solid rgba(31, 143, 87, 0.08);
+}
+
+.dl-progress-big {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    color: #1f8f57;
+    line-height: 1;
+}
+
+.dl-participant-row {
+    border: 1px solid rgba(31, 46, 43, 0.08);
+    border-radius: 1rem;
+    padding: 1rem 1.1rem;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+.dl-participant-row:hover {
+    background: #fafcfb;
+    transform: translateY(-1px);
+}
+
+.dl-participant-count {
+    min-width: 72px;
+    text-align: center;
+    border-radius: 999px;
+    padding: 0.45rem 0.9rem;
+    background: rgba(31, 143, 87, 0.10);
+    color: #1f8f57;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.dl-public-form .form-control,
+.dl-public-form .form-select {
+    min-height: 52px;
+    border-radius: 1rem;
+    border: 1px solid rgba(31, 46, 43, 0.12);
+    padding: 0.85rem 1rem;
+    box-shadow: none;
+}
+
+.dl-public-form .form-control:focus,
+.dl-public-form .form-select:focus {
+    border-color: rgba(31, 143, 87, 0.35);
+    box-shadow: 0 0 0 0.2rem rgba(31, 143, 87, 0.08);
+}
+
+.dl-public-form .form-label {
+    font-weight: 600;
+    color: #1f2e2b;
+    margin-bottom: 0.45rem;
+}
+
+.dl-public-form .btn {
+    min-height: 54px;
+    font-weight: 600;
+}
+
+.dl-bottom-cta-card {
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbf8 100%);
+    border: 1px solid rgba(31, 46, 43, 0.06);
+}
+
+.dl-bottom-cta-card p {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .dl-public-session-page {
+        padding-top: 0.5rem;
+        padding-bottom: 1.5rem;
     }
 
-    .dl-form-card,
-    .dl-side-card {
-        padding: 20px;
-        border-radius: 14px;
+    .dl-public-session-page .card {
+        border-radius: 1.25rem !important;
     }
+
+    .dl-progress-big {
+        font-size: 2rem;
+    }
+
+    .dl-participant-row {
+        padding: 0.9rem;
+    }
+
+    .dl-participant-count {
+        min-width: 64px;
+        font-size: 0.95rem;
+        padding: 0.4rem 0.8rem;
+    }
+         .dl-page-title {
+             font-size: 1.6rem;
+         }
+    
+         .dl-form-card,
+         .dl-side-card {
+             padding: 20px;
+             border-radius: 14px;
+         }
 }
+
 
 /* ======================
    Session Khatm

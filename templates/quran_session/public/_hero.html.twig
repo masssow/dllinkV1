@@ -1,0 +1,91 @@
+{% set sessionUrl = absolute_url(path('app_quran_session_public_show', {slug: session.slug})) %}
+
+{% set shareText %}
+    As-salâmou ‘alaykoum 🌿
+
+    {% if session.type == 'khatm' %}
+        Nous avons lancé un khatm collectif sur DahiraLink.
+    {% elseif session.type == 'dua' %}
+        Une session de du‘a / zikr collective est en cours sur DahiraLink.
+    {% endif %}
+
+    Vous pouvez participer simplement ici :
+    {{ absolute_url(path('app_quran_session_public_show', {slug: session.slug})) }}
+
+    Qu’Allah accepte cette participation. Âmîne.
+{% endset %}
+
+<div class="dl-session-hero-banner mb-4">
+    <div
+        class="text-center mb-0 dl-session-hero-wrapper"
+        {% if session.imageName %}
+            style="background-image: url('{{ asset('uploads/sessionsCovers/' ~ session.imageName) }}');"
+        {% else %}
+            style="background-image: url('{{ asset('images/default-session-cover.png') }}');"
+        {% endif %}
+    >
+        <div class="dl-session-hero-overlay">
+
+            <span class="badge rounded-pill bg-success-subtle text-success px-3 py-2 mb-3">
+                {% if session.type == 'khatm' %}
+                    Khatm collectif
+                {% elseif session.type == 'dua' %}
+                    Session de du‘a / zikr collective
+                {% else %}
+                    Session spirituelle
+                {% endif %}
+            </span>
+
+            <h1 class="fw-bold mb-3 dl-session-hero-title">{{ session.title }}</h1>
+
+            {% if session.description %}
+                <p class="text-muted mb-0 dl-session-hero-description">
+                    {{ session.description }}
+                </p>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+<div class="text-center mb-4">
+    <div class="dl-share-actions mt-4">
+        <a
+            href="https://wa.me/?text={{ shareText|url_encode }}"
+            target="_blank"
+            rel="noopener"
+            class="btn dl-btn-share-main"
+        >
+            Partager dans WhatsApp
+        </a>
+
+        <div class="dl-share-actions__secondary">
+            <a
+                href="https://t.me/share/url?url={{ sessionUrl|url_encode }}&text={{ shareText|url_encode }}"
+                target="_blank"
+                rel="noopener"
+                class="btn dl-btn-share-secondary"
+            >
+                Telegram
+            </a>
+
+            <button
+                type="button"
+                class="btn dl-btn-share-secondary"
+                onclick="navigator.clipboard.writeText('{{ sessionUrl }}')"
+            >
+                Copier le lien
+            </button>
+        </div>
+    </div>
+
+    <div class="small d-flex flex-column gap-1 align-items-center mt-4 mb-0 dl-session-hero__meta">
+        {% if session.scheduledAt %}
+            <span>Débute le {{ session.scheduledAt|date('d/m/Y') }}</span>
+        {% endif %}
+
+        {% if session.expiresAt %}
+            <span>Clôture prévue le {{ session.expiresAt|date('d/m/Y') }}</span>
+        {% endif %}
+    </div>
+</div>

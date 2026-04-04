@@ -2,28 +2,33 @@
 
 namespace App\Controller;
 
+use App\Entity\QuranDuaContribution;
 use App\Entity\QuranKhatmAssignment;
 use App\Entity\QuranSession;
 use App\Form\QuranSessionFormType;
 use App\Repository\QuranKhatmAssignmentRepository;
 use App\Repository\QuranSessionRepository;
+use App\Service\SessionCreatorService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 
 final class QuranSessionController extends AbstractController
 {
+
     #[Route('/session/new', name: 'app_quran_session_new')]
-    public function new(Request $request, EntityManagerInterface $em, Security $security, SluggerInterface $slugger, QuranSessionRepository $sessionRepo): Response
-    {
-        
+    public function new(
+        Request $request,
+        EntityManagerInterface $em,
+        SessionCreatorService $sessionCreatorService
+    ): Response {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $session = new QuranSession();
@@ -32,67 +37,58 @@ final class QuranSessionController extends AbstractController
         $form = $this->createForm(QuranSessionFormType::class, $session);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
 
-            // 1. Timestamps
-            $now = new \DateTimeImmutable();
-            $session->setCreatedAt($now);
-            $session->setExpiresAt($now->modify('+30 days'));
-            
-            // définir total hizb
-            $session->setTotalTarget(30);
-
-            for ($i = 1; $i <= $session->getTotalTarget(); $i++) {
-
-                $assignment = new QuranKhatmAssignment();
-
-                $assignment->setQuranSession($session);
-                $assignment->setJuzNumber($i);
-
-                $em->persist($assignment);
+            // Validation métier spécifique
+            if ($session->getType() === 'dua' && !$session->getExpiresAt()) {
+                $form->get('expiresAt')->addError(
+                    new \Symfony\Component\Form\FormError(
+                        'Veuillez renseigner une date de clôture pour une session de type Du‘a.'
+                    )
+                );
             }
 
-            // 2. Slug auto
-            $baseSlug = $slugger->slug($session->getTitle())->lower()->toString();
-            if ($baseSlug === '') {
-                $baseSlug = 'session-' . bin2hex(random_bytes(4));
-            }
-            
-            $slug = $baseSlug;
-            $i = 1;
-
-            while ($sessionRepo->findOneBy(['slug' => $slug])) {
-                $slug = $baseSlug . '-' . $i;
-                $i++;
+            if ($session->getScheduledAt() && $session->getExpiresAt()) {
+                if ($session->getExpiresAt() < $session->getScheduledAt()) {
+                    $form->get('expiresAt')->addError(
+                        new \Symfony\Component\Form\FormError(
+                            'La date de clôture doit être postérieure ou égale à la date de début.'
+                        )
+                    );
+                }
             }
 
-            $session->setSlug($slug);
+            // Si tout est bon, on crée réellement la session
+            if ($form->isValid()) {
+                $sessionCreatorService->prepare($session);
 
-            // 3. création de liste d Hizb pour les sessions de type Khatm
-           
-            $em->persist($session);
-            $em->flush();
+                $em->persist($session);
+                $em->flush();
 
-            // 4. Lien partageable (optionnel pour flash ou redirection)
-            $shareUrl = $this->generateUrl(
-                'app_quran_session_public_show',
-                ['slug' => $session->getSlug()],
-                UrlGeneratorInterface::ABSOLUTE_URL
-            );
+                $shareUrl = $this->generateUrl(
+                    'app_quran_session_public_show',
+                    ['slug' => $session->getSlug()],
+                    UrlGeneratorInterface::ABSOLUTE_URL
+                );
 
-            $this->addFlash('success', 'Session créée avec succès. Lien de partage : ' . $shareUrl);
+                $this->addFlash(
+                    'success',
+                    'Session créée avec succès. Lien de partage : ' . $shareUrl
+                );
 
-            return $this->redirectToRoute('app_quran_session_public_show', ['slug' => $session->getSlug()]); // Redirige vers l’espace personnel ou la liste des sessions
+                return $this->redirectToRoute('app_quran_session_public_show', [
+                    'slug' => $session->getSlug()
+                ]);
+            }
         }
 
         return $this->render('quran_session/new.html.twig', [
             'form' => $form->createView(),
-
         ]);
     }
 
+    #[Route('/s/{slug}/participate', name: 'app_quran_session_participate', methods: ['POST'])] 
 
-    #[Route('/s/{slug}/participate', name: 'app_quran_session_participate', methods: ['POST'])]
     public function participate(
         string $slug,
         Request $request,
@@ -190,22 +186,96 @@ final class QuranSessionController extends AbstractController
         }
 
         // récupérer les hizbs
-        $assignments = $assignmentRepo->findBy(
-            ['quranSession' => $session],
-            ['juzNumber' => 'ASC']
-        );
-
-      
-        $completedCount = $assignmentRepo->count([
-            'quranSession' => $session,
-            'isCompleted' => true
-        ]);
-
-        return $this->render('quran_session/public_show.html.twig', [
+        $viewData = [
             'session' => $session,
-            'assignments' => $assignments,
-            'completedCount' => $completedCount
-        ]);
+            'assignments' => [],
+            'completedCount' => 0,
+            'duaContributions' => [],
+            'duaTotalDone' => 0,
+            'duaPercent' => 0,
+            'isGoalReached' => false,
+        ];
+
+        if ($session->getType() === 'khatm') {
+            $assignments = $assignmentRepo->findBy(
+                ['quranSession' => $session],
+                ['juzNumber' => 'ASC']
+            );
+
+            $completedCount = $assignmentRepo->count([
+                'quranSession' => $session,
+                'isCompleted' => true
+            ]);
+
+            $viewData['assignments'] = $assignments;
+            $viewData['completedCount'] = $completedCount;
+            $viewData['isGoalReached'] = $completedCount >= ($session->getTotalTarget() ?? 30);
+        }
+
+        if ($session->getType() === 'dua') {
+            $duaContributions = $session->getQuranDuaContributions()->toArray();
+
+            usort($duaContributions, function ($a, $b) {
+                return $b->getCreatedAt() <=> $a->getCreatedAt();
+            });
+
+            $duaTotalDone = array_reduce($duaContributions, function ($carry, $contribution) {
+                return $carry + ($contribution->getContributionCount() ?? 0);
+            }, 0);
+
+            $target = $session->getTotalTarget() ?? 0;
+            $duaPercent = $target > 0 ? min(100, round(($duaTotalDone / $target) * 100)) : 0;
+
+            $viewData['duaContributions'] = $duaContributions;
+            $viewData['duaTotalDone'] = $duaTotalDone;
+            $viewData['duaPercent'] = $duaPercent;
+            $viewData['isGoalReached'] = $target > 0 && $duaTotalDone >= $target;
+        }
+
+        return $this->render('quran_session/public_show.html.twig', $viewData);
+    
+    }
+
+    #[Route('/s/{slug}/participate-dua', name: 'app_quran_session_participate_dua', methods: ['POST'])]
+    public function participateDua(
+        string $slug,
+        Request $request,
+        QuranSessionRepository $sessionRepo,
+        EntityManagerInterface $em
+    ): RedirectResponse {
+
+        $session = $sessionRepo->findOneBy(['slug' => $slug]);
+
+        if (!$session) {
+            throw $this->createNotFoundException();
+        }
+
+        // sécurité métier
+        if ($session->getType() !== 'dua') {
+            $this->addFlash('error', 'Cette session ne permet pas ce type de participation.');
+            return $this->redirectToRoute('app_quran_session_public_show', ['slug' => $slug]);
+        }
+
+        $participant = trim($request->request->get('participant'));
+        $count = (int) $request->request->get('count');
+
+        if (!$participant || $count <= 0) {
+            $this->addFlash('error', 'Veuillez renseigner votre nom et un nombre valide.');
+            return $this->redirectToRoute('app_quran_session_public_show', ['slug' => $slug]);
+        }
+
+        $contribution = new QuranDuaContribution();
+        $contribution->setParticipantName($participant);
+        $contribution->setContributionCount($count);
+        $contribution->setQuranSession($session);
+        $contribution->setCreatedAt(new \DateTimeImmutable());
+
+        $em->persist($contribution);
+        $em->flush();
+
+        $this->addFlash('success', 'Votre participation a été enregistrée. Qu’Allah accepte.');
+
+        return $this->redirectToRoute('app_quran_session_public_show', ['slug' => $slug]);
     }
 
 

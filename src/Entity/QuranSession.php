@@ -7,10 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: QuranSessionRepository::class)]
+#[Vich\Uploadable]
+
 class QuranSession
 {
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -62,6 +67,15 @@ class QuranSession
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $scheduledAt = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageName = null;
+
+    #[Vich\UploadableField(mapping: 'quran_session_images', fileNameProperty: 'imageName')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct()
     {
@@ -149,10 +163,11 @@ class QuranSession
 
     public function getExpiresAt(): ?\DateTimeImmutable
     {
+        
         return $this->expiresAt;
     }
 
-    public function setExpiresAt(\DateTimeImmutable $expiresAt): static
+    public function setExpiresAt(?\DateTimeImmutable $expiresAt): static
     {
         $this->expiresAt = $expiresAt;
 
@@ -265,6 +280,43 @@ class QuranSession
     public function setScheduledAt(?\DateTimeImmutable $scheduledAt): static
     {
         $this->scheduledAt = $scheduledAt;
+
+        return $this;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageName(?string $imageName): static
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+        if (null !== $imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

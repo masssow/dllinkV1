@@ -1,95 +1,103 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Session {{ session.title }} - DahiraLink{% endblock %}
+{% block title %}{{ session.title }} — DahiraLink{% endblock %}
 
+
+{% block meta_description %}
+    {% if session.description %}
+    {{ session.description|striptags|u.truncate(155, '...') }}
+    {% elseif session.type == 'khatm' %}
+    Participez à ce khatm collectif sur DahiraLink.
+    {% elseif session.type == 'dua' %}
+    Participez à cette session de du‘a / zikr collective sur DahiraLink.
+    {% else %}
+    Participez à cette session spirituelle sur DahiraLink.
+    {% endif %}
+    {% endblock %}
+
+    {% block og_type %}article{% endblock %}
+
+    {% block og_title %}
+    {{ session.title }} — DahiraLink
+    {% endblock %}
+
+    {% block og_description %}
+    {% if session.description %}
+    {{ session.description|striptags|u.truncate(180, '...') }}
+    {% elseif session.type == 'khatm' %}
+    Rejoignez ce khatm collectif et prenez votre part facilement.
+    {% elseif session.type == 'dua' %}
+    Rejoignez cette session de du‘a / zikr collective et participez simplement.
+    {% else %}
+    Participez à cette session spirituelle sur DahiraLink.
+    {% endif %}
+    {% endblock %}
+
+    {% block og_url %}
+    {{ absolute_url(path('app_quran_session_public_show', {slug: session.slug})) }}
+    {% endblock %}
+
+    {% block og_image %}
+    {% if session.imageName %}
+    {{ absolute_url(asset('uploads/sessions/' ~ session.imageName)) }}
+    {% else %}
+    {{ absolute_url(asset('images/og-default-dahiralink.jpg')) }}
+    {% endif %}
+    {% endblock %}
+
+    {% block twitter_title %}
+    {{ session.title }} — DahiraLink
+    {% endblock %}
+
+    {% block twitter_description %}
+    {% if session.description %}
+    {{ session.description|striptags|u.truncate(180, '...') }}
+    {% elseif session.type == 'khatm' %}
+    Rejoignez ce khatm collectif et prenez votre part facilement.
+    {% elseif session.type == 'dua' %}
+    Rejoignez cette session de du‘a / zikr collective et participez simplement.
+    {% else %}
+    Participez à cette session spirituelle sur DahiraLink.
+    {% endif %}
+    {% endblock %}
+
+    {% block twitter_image %}
+    {% if session.imageName %}
+    {{ absolute_url(asset('uploads/sessions/' ~ session.imageName)) }}
+    {% else %}
+    {{ absolute_url(asset('images/og-default-dahiralink.jpg')) }}
+    {% endif %}
+{% endblock %}
 {% block body %}
+<div class="dl-public-session-page">
 
-{% set total = session.totalTarget ?? 0 %}
-{% set completed = completedCount ?? 0 %}
-{% set percent = total > 0 ? (completed / total * 100)|round : 0 %}
+<section class="py-4 py-md-5 bg-light">
+    <div class="container" style="max-width: 920px;">
 
-<section class="dl-session-hero py-5">
+        {% include 'quran_session/public/_hero.html.twig' %}
+        {% include 'quran_session/public/_progress.html.twig' %}
 
-<div class="container">
+        {% if isGoalReached %}
+            {% include 'quran_session/public/_goal_reached.html.twig' %}
+        {% endif %}
 
-<div class="text-center">
+        {% if session.type == 'khatm' %}
+            {% include 'quran_session/public/_khatm_section.html.twig' %}
+        {% elseif session.type == 'dua' %}
+            {% include 'quran_session/public/_dua_section.html.twig' %}
+        {% endif %}
 
-<span class="dl-eyebrow">Session spirituelle</span>
-
-<h1 class="dl-session-title mt-2">
-{{ session.title }}
-</h1>
-
-<p class="dl-session-meta">
-
-{{ session.type }}
-
-{% if session.scheduledAt %}
-• {{ session.scheduledAt|date('d/m/Y H:i') }}
-{% endif %}
-
-</p>
-
-{% if session.description %}
-<p class="dl-session-description mt-3">
-{{ session.description }}
-</p>
-{% endif %}
-
-</div>
-
-</div>
-
+    </div>
 </section>
-
-<section class="pb-5">
-
-<div class="container">
-
-<div class="row g-4">
-
-<div class="col-lg-8">
-
-<div class="dl-card">
-
-{% include 'quran_session/components/khatm_grid.html.twig' %}
-
 </div>
 
-<div class="dl-card mt-4">
-
-{% include 'quran_session/components/khatm_progress.html.twig' %}
-
-</div>
-
-</div>
-
-<div class="col-lg-4">
-
-<div class="dl-card">
-
-{% include 'quran_session/components/session_header.html.twig' %}
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<script>
-
-window.khatmConfig = {
-    sessionSlug: "{{ session.slug }}",
-    sessionStateUrl: "{{ path('app_session_state', {'slug': session.slug}) }}",
-    toggleUrlBase: "/api/hizb/toggle/"
-}
-
-</script>
-
-<script src="/js/khatmAnimation.js"></script>
+{% if session.type == 'khatm' %}
+    <script>
+        window.khatmConfig = {
+            sessionSlug: "{{ session.slug }}",
+            sessionStateUrl: "{{ path('app_session_state', {slug: session.slug}) }}"
+        };
+    </script>
+{% endif %}
 
 {% endblock %}

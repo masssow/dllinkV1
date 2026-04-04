@@ -4,6 +4,16 @@
         <meta charset="UTF-8" >
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
          <meta name="description" content="DahiraLink facilite l’organisation des khatms et des lectures collectives déjà partagées sur WhatsApp, sans changer les habitudes de votre dahira.">
+         <meta name="robots" content="{% block meta_robots %}index,follow{% endblock %}">
+         <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+        <meta property="og:title" content="{% block og_title %}DahiraLink{% endblock %}">
+        <meta property="og:description" content="{% block og_description %}DahiraLink facilite l’organisation des lectures collectives, khatm et duas partagés au sein de la communauté.{% endblock %}">
+        <meta property="og:url" content="{% block og_url %}{{ app.request.uri }}{% endblock %}">
+        <meta property="og:image" content="{% block og_image %}{{ absolute_url(asset('images/og-default-dahiralink.jpg')) }}{% endblock %}">
+        <meta property="og:site_name" content="DahiraLink">
+
+        {# Twitter / X cards #}
+        <meta name="twitter:card" content="summary_large_image">
          <meta name="keywords" content="DahiraLink, khatm, lecture collective Quran, organisation, dahira, Contact Dahira, WhatsApp, duas collectives, Kh assaides, khatms partagés, communauté, plateforme, outil, simple, mobile, suivi, répartition Quran, initiative Quran partagée,Diaspora, Sénégal, Afrique, dahira Europe, dahira EEUU, musulmans, mouride, Tidjane, qadre, khassida, khatms, lecture collective, organisation dahira, outil dahira, plateforme dahira, suivi khatm, répartition khatm, initiative partagée, communauté musulmane, diaspora sénégalaise, dahira en ligne">
          <meta name="Nouroul Houda editions" content="DahiraLink Team">
          <meta property="og:title" content="DahiraLink">

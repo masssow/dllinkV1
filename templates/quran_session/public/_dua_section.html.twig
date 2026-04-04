@@ -1,0 +1,107 @@
+<div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+    <h5 class="fw-semibold mb-3">Pratique collective</h5>
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="border rounded-4 p-3 h-100 bg-white">
+                <div class="small text-muted mb-1">Zikr / Du‘a / Khassida</div>
+                <div class="fw-semibold">
+                    {{ session.duaLabel ?: 'Invocation collective' }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="border rounded-4 p-3 h-100 bg-white">
+                <div class="small text-muted mb-1">Objectif</div>
+                <div class="fw-semibold">
+                    {{ session.totalTarget }} répétitions
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-semibold mb-0">Participants</h5>
+        <span class="small text-muted">{{ duaContributions|length }} participation(s)</span>
+    </div>
+
+    {% if duaContributions is not empty %}
+        <div class="d-flex flex-column gap-3">
+            {% for contribution in duaContributions %}
+                <div class="border rounded-4 p-3 d-flex justify-content-between align-items-center bg-white">
+                    <div>
+                        <div class="fw-semibold">{{ contribution.participantName }}</div>
+                        <div class="small text-muted">
+                            {{ contribution.createdAt|date('d/m/Y H:i') }}
+                        </div>
+                    </div>
+
+                    <div class="text-success fw-bold fs-5">
+                        {{ contribution.contributionCount }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center text-muted py-4">
+            Aucune participation enregistrée pour le moment.
+        </div>
+    {% endif %}
+</div>
+
+<div class="text-center mt-2 mb-4 small text-muted">
+    Total actuel : <strong>{{ duaTotalDone }}</strong> / {{ session.totalTarget }}
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+    <div class="text-center mb-4">
+        <h5 class="fw-semibold mb-2">Participer</h5>
+        <p class="text-muted mb-0">
+            Ajoutez votre contribution simplement.
+        </p>
+    </div>
+
+    <form method="post" action="{{ path('app_quran_session_participate_dua', {slug: session.slug}) }}">
+        
+        <div class="row g-3">
+
+            <div class="col-md-6">
+                <label class="form-label">Votre nom</label>
+                <input
+                    type="text"
+                    name="participant"
+                    class="form-control"
+                    placeholder="Ex. Abdoulaye"
+                    required
+                >
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Nombre de répétitions réalisées</label>
+                <input
+                    type="number"
+                    name="count"
+                    class="form-control"
+                    min="1"
+                    placeholder="Ex. 100"
+                    required
+                >
+            </div>
+
+        </div>
+
+        <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-success rounded-pill py-3">
+                Ajouter ma participation
+            </button>
+        </div>
+
+        <p class="text-muted small mt-3 mb-0 text-center">
+            Chaque contribution compte. Qu’Allah accepte.
+        </p>
+
+    </form>
+</div>

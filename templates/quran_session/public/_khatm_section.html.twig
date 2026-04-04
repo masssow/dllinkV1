@@ -1,0 +1,102 @@
+<div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h5 class="fw-semibold mb-1 dl-public-section-title">Grille du Khatm</h5>
+            <p class="dl-public-section-subtitle mb-0">Choisissez un hizb libre ou suivez l’avancement collectif.</p>
+        </div>
+        <span class="small text-muted">30 hizb à compléter</span>
+    </div>
+
+    <div class="row g-3">
+        {% for assignment in assignments %}
+            <div class="col-6 col-md-4 col-lg-3">
+               <div
+                    id="hizb-{{ assignment.juzNumber }}"
+                    class="border rounded-4 p-3 h-100 text-center dl-hizb-card
+                        {% if assignment.isCompleted %}
+                            hizb-completed bg-success-subtle border-success
+                        {% elseif assignment.participantName %}
+                            hizb-assigned bg-warning-subtle border-warning
+                        {% else %}
+                            hizb-free bg-white
+                        {% endif %}
+                    "
+                    data-id="{{ assignment.id }}"
+                    data-juz="{{ assignment.juzNumber }}"
+                    data-toggle-url="{{ path('app_hizb_toggle_api', {id: assignment.id}) }}"
+                    {% if assignment.participantName %}
+                        onclick="toggleHizb(this)"
+                        style="cursor: pointer;"
+                    {% endif %}
+                >
+                    <div class="fw-bold mb-2">Hizb {{ assignment.juzNumber }}</div>
+
+                    <div class="small text-muted mb-2 participant">
+                        {% if assignment.participantName %}
+                            {{ assignment.participantName }}
+                        {% else %}
+                            Libre
+                        {% endif %}
+                    </div>
+
+                    {% if assignment.isCompleted %}
+                        <span class="badge bg-success hizb-status-badge mt-2">Terminé</span>
+                    {% elseif assignment.participantName %}
+                        <span class="badge bg-warning text-dark hizb-status-badge mt-2">Terminer ce Hizb</span>
+                    {# {% else %}
+                        <span class="badge bg-light text-dark hizb-status-badge mt-2">Disponible</span> #}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+    <div class="text-center mb-4">
+        <h5 class="fw-semibold mb-2 dl-public-section-title">Participer au Khatm</h5>
+        <p class="dl-public-section-subtitle">
+            Prenez un hizb libre et rejoignez facilement la lecture collective.
+        </p>
+    </div>
+
+    <form method="post" action="{{ path('app_quran_session_participate', {slug: session.slug}) }}" class="dl-public-form">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label">Votre nom</label>
+                <input
+                    type="text"
+                    name="participant"
+                    class="form-control"
+                    placeholder="Ex. Abdoulaye"
+                    required
+                >
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Choisir un hizb</label>
+                   <select name="hizb" class="form-select" required>
+                        <option value="">Sélectionner un hizb libre</option>
+
+                        {% for assignment in assignments %}
+                            {% if not assignment.participantName %}
+                                <option value="{{ assignment.juzNumber }}">
+                                    Hizb {{ assignment.juzNumber }}
+                                </option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+            </div>
+        </div>
+
+        <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-success rounded-pill py-3">
+                Ajouter ma participation
+            </button>
+        </div>
+
+        <p class="text-muted small mt-3 mb-0 text-center">
+            Une fois votre hizb terminé, vous pourrez le marquer comme complété.
+        </p>
+    </form>
+</div>
