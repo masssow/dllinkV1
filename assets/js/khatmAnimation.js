@@ -1,3 +1,14 @@
+// annimation copie lien khatm public
+function copySessionLink(url) {
+    navigator.clipboard.writeText(url).then(() => {
+        const el = document.getElementById('copy-feedback');
+        el.classList.remove('d-none');
+
+        setTimeout(() => {
+            el.classList.add('d-none');
+        }, 2000);
+    });
+}
 // Animation / état des cards session page
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -2,93 +2,90 @@
 
 {% block title %}{{ session.title }} — DahiraLink{% endblock %}
 
-
 {% block meta_description %}
     {% if session.description %}
-    {{ session.description|striptags|u.truncate(155, '...') }}
+        {{ session.description|striptags|u.truncate(155, '...') }}
     {% elseif session.type == 'khatm' %}
-    Participez à ce khatm collectif sur DahiraLink.
+        Participez à ce khatm collectif sur DahiraLink.
     {% elseif session.type == 'dua' %}
-    Participez à cette session de du‘a / zikr collective sur DahiraLink.
+        Participez à cette session de du‘a / zikr collective sur DahiraLink.
     {% else %}
-    Participez à cette session spirituelle sur DahiraLink.
-    {% endif %}
-    {% endblock %}
-
-    {% block og_type %}article{% endblock %}
-
-    {% block og_title %}
-    {{ session.title }} — DahiraLink
-    {% endblock %}
-
-    {% block og_description %}
-    {% if session.description %}
-    {{ session.description|striptags|u.truncate(180, '...') }}
-    {% elseif session.type == 'khatm' %}
-    Rejoignez ce khatm collectif et prenez votre part facilement.
-    {% elseif session.type == 'dua' %}
-    Rejoignez cette session de du‘a / zikr collective et participez simplement.
-    {% else %}
-    Participez à cette session spirituelle sur DahiraLink.
-    {% endif %}
-    {% endblock %}
-
-    {% block og_url %}
-    {{ absolute_url(path('app_quran_session_public_show', {slug: session.slug})) }}
-    {% endblock %}
-
-    {% block og_image %}
-    {% if session.imageName %}
-    {{ absolute_url(asset('uploads/sessions/' ~ session.imageName)) }}
-    {% else %}
-    {{ absolute_url(asset('images/og-default-dahiralink.jpg')) }}
-    {% endif %}
-    {% endblock %}
-
-    {% block twitter_title %}
-    {{ session.title }} — DahiraLink
-    {% endblock %}
-
-    {% block twitter_description %}
-    {% if session.description %}
-    {{ session.description|striptags|u.truncate(180, '...') }}
-    {% elseif session.type == 'khatm' %}
-    Rejoignez ce khatm collectif et prenez votre part facilement.
-    {% elseif session.type == 'dua' %}
-    Rejoignez cette session de du‘a / zikr collective et participez simplement.
-    {% else %}
-    Participez à cette session spirituelle sur DahiraLink.
-    {% endif %}
-    {% endblock %}
-
-    {% block twitter_image %}
-    {% if session.imageName %}
-    {{ absolute_url(asset('uploads/sessions/' ~ session.imageName)) }}
-    {% else %}
-    {{ absolute_url(asset('images/og-default-dahiralink.jpg')) }}
+        Participez à cette session spirituelle sur DahiraLink.
     {% endif %}
 {% endblock %}
+
+{% block og_type %}website{% endblock %}
+
+{% block og_title %}
+    {{ session.title }} — DahiraLink
+{% endblock %}
+
+{% block og_description %}
+    {% if session.description %}
+        {{ session.description|striptags|u.truncate(180, '...') }}
+    {% elseif session.type == 'khatm' %}
+        Rejoignez ce khatm collectif et prenez votre part facilement.
+    {% elseif session.type == 'dua' %}
+        Rejoignez cette session de du‘a / zikr collective et participez simplement.
+    {% else %}
+        Participez à cette session spirituelle sur DahiraLink.
+    {% endif %}
+{% endblock %}
+
+{% block og_url %}
+    {{ absolute_url(path('app_quran_session_public_show', {slug: session.slug})) }}
+{% endblock %}
+
+{% block og_image %}
+    {{ ogImage }}
+{% endblock %}
+
+{% block twitter_image %}
+    {{ ogImage }}
+{% endblock %}
+
+{% block twitter_description %}
+    {% if session.description %}
+        {{ session.description|striptags|u.truncate(180, '...') }}
+    {% elseif session.type == 'khatm' %}
+        Rejoignez ce khatm collectif et prenez votre part facilement.
+    {% elseif session.type == 'dua' %}
+        Rejoignez cette session de du‘a / zikr collective et participez simplement.
+    {% else %}
+        Participez à cette session spirituelle sur DahiraLink.
+    {% endif %}
+{% endblock %}
+
+{% block twitter_image %}
+    {% if session.imageName %}
+        {{ absolute_url(asset('uploads/sessionsCovers/' ~ session.imageName)) }}
+    {% else %}
+        {{ absolute_url(asset('images/og-default-dahiralink.png')) }}
+    {% endif %}
+{% endblock %}
+
 {% block body %}
 <div class="dl-public-session-page">
 
-<section class="py-4 py-md-5 bg-light">
-    <div class="container" style="max-width: 920px;">
+    <section class="py-4 py-md-5 bg-light">
+        <div class="container" style="max-width: 920px;">
 
-        {% include 'quran_session/public/_hero.html.twig' %}
-        {% include 'quran_session/public/_progress.html.twig' %}
+            {% include 'quran_session/public/_hero.html.twig' %}
+            {% include 'quran_session/public/_progress.html.twig' %}
 
-        {% if isGoalReached %}
-            {% include 'quran_session/public/_goal_reached.html.twig' %}
-        {% endif %}
+            {% if isGoalReached %}
+                {% include 'quran_session/public/_goal_reached.html.twig' %}
+            {% endif %}
 
-        {% if session.type == 'khatm' %}
-            {% include 'quran_session/public/_khatm_section.html.twig' %}
-        {% elseif session.type == 'dua' %}
-            {% include 'quran_session/public/_dua_section.html.twig' %}
-        {% endif %}
+            {% if session.type == 'khatm' %}
+                {% include 'quran_session/public/_khatm_section.html.twig' %}
+            {% elseif session.type == 'dua' %}
+                {% include 'quran_session/public/_dua_section.html.twig' %}
+            {% endif %}
 
-    </div>
-</section>
+        </div>
+    </section>
+
 </div>
 
 {% if session.type == 'khatm' %}
@@ -99,5 +96,4 @@
         };
     </script>
 {% endif %}
-
 {% endblock %}

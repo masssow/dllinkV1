@@ -1,20 +1,8 @@
 {% set sessionUrl = absolute_url(path('app_quran_session_public_show', {slug: session.slug})) %}
 
-{% set shareText %}
-    As-salâmou ‘alaykoum 🌿
-
-    {% if session.type == 'khatm' %}
-        Nous avons lancé un khatm collectif sur DahiraLink.
-    {% elseif session.type == 'dua' %}
-        Une session de du‘a / zikr collective est en cours sur DahiraLink.
-    {% endif %}
-
-    Vous pouvez participer simplement ici :
-    {{ absolute_url(path('app_quran_session_public_show', {slug: session.slug})) }}
-
-    Qu’Allah accepte cette participation. Âmîne.
-{% endset %}
-
+{{ whatsappShareUrl }}
+{{ telegramShareUrl }}
+{{ shareUrl }}
 <div class="dl-session-hero-banner mb-4">
     <div
         class="text-center mb-0 dl-session-hero-wrapper"
@@ -28,9 +16,9 @@
 
             <span class="badge rounded-pill bg-success-subtle text-success px-3 py-2 mb-3">
                 {% if session.type == 'khatm' %}
-                    Khatm collectif
+                    Kaamil collectif
                 {% elseif session.type == 'dua' %}
-                    Session de du‘a / zikr collective
+                    Session de durus / zikr collective
                 {% else %}
                     Session spirituelle
                 {% endif %}
@@ -49,9 +37,12 @@
 </div>
 
 <div class="text-center mb-4">
+
     <div class="dl-share-actions mt-4">
+
+        <!-- CTA principal -->
         <a
-            href="https://wa.me/?text={{ shareText|url_encode }}"
+            href="{{ whatsappShareUrl }}"
             target="_blank"
             rel="noopener"
             class="btn dl-btn-share-main"
@@ -59,9 +50,11 @@
             Partager dans WhatsApp
         </a>
 
-        <div class="dl-share-actions__secondary">
+        <!-- secondaires -->
+        <div class="dl-share-actions__secondary mt-3 d-flex justify-content-center gap-2 flex-wrap">
+
             <a
-                href="https://t.me/share/url?url={{ sessionUrl|url_encode }}&text={{ shareText|url_encode }}"
+                href="{{ telegramShareUrl }}"
                 target="_blank"
                 rel="noopener"
                 class="btn dl-btn-share-secondary"
@@ -72,13 +65,20 @@
             <button
                 type="button"
                 class="btn dl-btn-share-secondary"
-                onclick="navigator.clipboard.writeText('{{ sessionUrl }}')"
+                onclick="copySessionLink('{{ shareUrl }}')"
             >
                 Copier le lien
             </button>
+
         </div>
     </div>
 
+    <!-- feedback UX -->
+    <div id="copy-feedback" class="small text-success mt-2 d-none">
+        Lien copié
+    </div>
+
+    <!-- meta -->
     <div class="small d-flex flex-column gap-1 align-items-center mt-4 mb-0 dl-session-hero__meta">
         {% if session.scheduledAt %}
             <span>Débute le {{ session.scheduledAt|date('d/m/Y') }}</span>
@@ -88,4 +88,5 @@
             <span>Clôture prévue le {{ session.expiresAt|date('d/m/Y') }}</span>
         {% endif %}
     </div>
+
 </div>

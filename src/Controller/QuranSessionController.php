@@ -176,7 +176,7 @@ final class QuranSessionController extends AbstractController
     #[Route('/s/{slug}', name: 'app_quran_session_public_show')]
     public function publicShow(
         QuranSessionRepository $sessionRepo,
-        string $slug, QuranKhatmAssignmentRepository $assignmentRepo
+        string $slug, QuranKhatmAssignmentRepository $assignmentRepo, Request $request
     ): Response {
 
         $session = $sessionRepo->findOneBy(['slug' => $slug]);
@@ -196,6 +196,8 @@ final class QuranSessionController extends AbstractController
             'isGoalReached' => false,
         ];
 
+        //Khatm : récupérer les assignments et calculer le nombre de hizbs complétés
+
         if ($session->getType() === 'khatm') {
             $assignments = $assignmentRepo->findBy(
                 ['quranSession' => $session],
@@ -212,6 +214,8 @@ final class QuranSessionController extends AbstractController
             $viewData['isGoalReached'] = $completedCount >= ($session->getTotalTarget() ?? 30);
         }
 
+
+        // Du‘a : récupérer les contributions, calculer le total et le pourcentage d’avancement
         if ($session->getType() === 'dua') {
             $duaContributions = $session->getQuranDuaContributions()->toArray();
 
@@ -232,8 +236,38 @@ final class QuranSessionController extends AbstractController
             $viewData['isGoalReached'] = $target > 0 && $duaTotalDone >= $target;
         }
 
+        $shareUrl = $request->getSchemeAndHttpHost() . $this->generateUrl('app_quran_session_public_show', [
+            'slug' => $session->getSlug(),
+        ]);
+
+        if ($session->getType() === 'khatm') {
+            $shareText = "📖 Participez à ce kaamil sur DahiraLink.\n\n"
+                . "Choisissez votre hizb et rejoignez la lecture :\n"
+                . $shareUrl . "\n\n"
+                . "Qu’Allah accepte cette action collective. 🤲";
+        } elseif ($session->getType() === 'dua') {
+            $shareText = "🤲 Rejoignez cette pratique (Barkélou) collective sur DahiraLink.\n\n"
+                . "Ajoutez votre participation :\n"
+                . $shareUrl . "\n\n"
+                . "Qu’Allah accepte nos invocations. Âmîne.";
+        } else {
+            $shareText = "Participez à cette session sur DahiraLink :\n\n" . $shareUrl;
+        }
+
+        $whatsappShareUrl = 'https://wa.me/?text=' . urlencode($shareText);
+        $telegramShareUrl = 'https://t.me/share/url?url=' . urlencode($shareUrl) . '&text=' . urlencode($shareText);
+
+        $ogImage = $session->getImageName()
+            ? $request->getSchemeAndHttpHost() . '/uploads/sessionsCovers/' . $session->getImageName()
+            : $request->getSchemeAndHttpHost() . '/images/og-default-dahiralink.png';
+
+        $viewData['shareUrl'] = $shareUrl;
+        $viewData['shareText'] = $shareText;
+        $viewData['whatsappShareUrl'] = $whatsappShareUrl;
+        $viewData['telegramShareUrl'] = $telegramShareUrl;
+        $viewData['ogImage'] = $ogImage;
+
         return $this->render('quran_session/public_show.html.twig', $viewData);
-    
     }
 
     #[Route('/s/{slug}/participate-dua', name: 'app_quran_session_participate_dua', methods: ['POST'])]
