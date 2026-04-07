@@ -2,51 +2,55 @@
     <div class="container">
 
         {% include 'components/_section_heading.html.twig' with {
-            eyebrow: 'Comment ça fonctionne',
-            title: 'Un fonctionnement simple, pensé pour le quotidien',
-            text: 'DahiraLink accompagne une organisation déjà familière, en la rendant plus fluide et plus lisible.'
+            eyebrow: 'Comment ça marche ?',
+            title: '3 étapes simples pour organiser votre khatm',
+            text: 'Créez, partagez et suivez. Rien de plus.'
         } %}
 
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="bg-white rounded-4 shadow-sm p-4 h-100 text-center">
-                    <div class="fs-1 mb-3">1️⃣</div>
-                    <h5 class="fw-bold">Créer ou rejoindre</h5>
+                    <div class="fs-3 fw-bold text-success mb-3">1️⃣</div>
+                    <h5 class="fw-bold">Créez une session</h5>
                     <p class="text-muted small mb-0">
-                        Créez une nouvelle session ou rejoignez une lecture collective déjà lancée.
+                                               Définissez le titre, la description et lancez la session en quelques secondes.
+
                     </p>
                 </div>
             </div>
 
             <div class="col-md-4">
                 <div class="bg-white rounded-4 shadow-sm p-4 h-100 text-center">
-                    <div class="fs-1 mb-3">2️⃣</div>
-                    <h5 class="fw-bold">Choisir sa participation</h5>
+                    <div class="fs-3 fw-bold text-success mb-3">2️⃣</div>
+                    <h5 class="fw-bold">Partagez le lien</h5>
                     <p class="text-muted small mb-0">
-                        Chacun peut prendre sa part de manière simple, visible et mieux organisée.
+                                                   Envoyez le lien dans vos groupes WhatsApp pour que chacun puisse participer.
+
+
                     </p>
                 </div>
             </div>
 
             <div class="col-md-4">
                 <div class="bg-white rounded-4 shadow-sm p-4 h-100 text-center">
-                    <div class="fs-1 mb-3">3️⃣</div>
-                    <h5 class="fw-bold">Partager sur WhatsApp et suivre</h5>
+                    <div class="fs-3 fw-bold text-success mb-3">3️⃣</div>
+                    <h5 class="fw-bold">Interagissez et suivez</h5>
                     <p class="text-muted small mb-0">
-                        Envoyez le lien dans vos groupes ou conversations et gardez une organisation plus claire.
+                                                  Visualisez l’avancement et retrouvez vos sessions à tout moment dans votre espace DahiraLink.
+
                     </p>
                 </div>
             </div>
-        </div>
+
 
         <div class="text-center mt-5">
             <a href="{{ path('app_quran_session_new') }}" class="btn btn-success rounded-pill px-4 me-2">
                 Créer une session
             </a>
 
-            <a href="{{ path('app_about') }}" class="btn btn-outline-dark rounded-pill px-4">
-                En savoir plus
-            </a>
+            {# <a href="{{ path('app_about') }}" class="btn btn-outline-dark rounded-pill px-4"> #}
+                {# En savoir plus #}
+            {# </a> #}
         </div>
     </div>
 </section>
