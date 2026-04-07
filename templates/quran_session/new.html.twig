@@ -23,11 +23,16 @@
             {{ form_start(form, { attr: { class: 'dl-session-form', novalidate: 'novalidate' } }) }}
             {{ form_errors(form) }}
                 <div class="mb-4">
-                    {{ form_row(form.title) }}
+                 * {{ form_row(form.title) }}
+                  {{ form_widget(form.title) }}
+                  {{ form_errors(form.title) }}
+
                 </div>
 
                 <div class="mb-4">
-                    {{ form_row(form.type) }}
+                  *  {{ form_row(form.type) }}
+                    {{ form_widget(form.type) }}
+                    {{ form_errors(form.type) }}
                 </div>
 
                 <div id="khatm-info-block" class="dl-type-panel dl-type-panel--khatm mb-4">
@@ -43,19 +48,25 @@
                 <div id="dua-fields-block" class="dl-type-panel dl-type-panel--dua">
                     <div class="mb-4">
                         {{ form_row(form.duaLabel) }}
+                        {{ form_widget(form.duaLabel) }}
+                        {{ form_errors(form.duaLabel) }}
                     </div>
 
                     <div class="mb-4">
-                        {{ form_row(form.totalTarget) }}
+                      *  {{ form_row(form.totalTarget) }}
+                        {{ form_widget(form.totalTarget) }}
+                        {{ form_errors(form.totalTarget) }}
                     </div>
 
                     <div class="mb-4">
-                        {{ form_row(form.expiresAt) }}
+                      *  {{ form_row(form.expiresAt) }}  
+                        {{ form_widget(form.expiresAt) }}
+                        {{ form_errors(form.expiresAt) }}
                     </div>
                 </div>
 
                 <div class="mb-4">
-                    {{ form_row(form.description) }}
+                  (optionnel)  {{ form_row(form.description) }}
                 </div>
 
                 <div class="mb-4">
@@ -68,6 +79,7 @@
 
                 <div class="mb-4">
                     {{ form_row(form.scheduledAt) }}
+                   
                 </div>
 
                 <div class="d-grid mt-4">

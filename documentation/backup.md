@@ -1,95 +1,140 @@
-{% extends 'base.html.twig' %}
+// Animation / état des cards session page
 
-{% block title %}Session {{ session.title }} - DahiraLink{% endblock %}
+    const slug = window.khatmConfig.sessionSlug;
+    const stateUrl = window.khatmConfig.sessionStateUrl;
 
-{% block body %}
+    let khatmPollingStarted = false;
+    let toggleLock = false;
 
-{% set total = session.totalTarget ?? 0 %}
-{% set completed = completedCount ?? 0 %}
-{% set percent = total > 0 ? (completed / total * 100)|round : 0 %}
+    function refreshKhatm() {
+        if (toggleLock) return;
 
-<section class="dl-session-hero py-5">
+        fetch(stateUrl)
+            .then(r => r.json())
+            .then(data => {
+                data.forEach(hizb => {
+                    let card = document.getElementById("hizb-" + hizb.juz);
 
-<div class="container">
+                    if (!card) return;
 
-<div class="text-center">
+                    card.classList.remove(
+                        "hizb-free",
+                        "hizb-assigned",
+                        "hizb-completed"
+                    );
 
-<span class="dl-eyebrow">Session spirituelle</span>
+                    if (hizb.completed) {
+                        card.classList.add("hizb-completed");
+                    } else if (hizb.participant) {
+                        card.classList.add("hizb-assigned");
+                    } else {
+                        card.classList.add("hizb-free");
+                    }
 
-<h1 class="dl-session-title mt-2">
-{{ session.title }}
-</h1>
+                    let participant = card.querySelector(".participant");
 
-<p class="dl-session-meta">
+                    if (participant) {
+                        participant.innerText = hizb.participant ?? "Libre";
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Erreur refreshKhatm:', error);
+            });
+    }
 
-{{ session.type }}
+    function startPolling() {
+        if (khatmPollingStarted) return;
 
-{% if session.scheduledAt %}
-• {{ session.scheduledAt|date('d/m/Y H:i') }}
-{% endif %}
+        khatmPollingStarted = true;
+        setInterval(refreshKhatm, 5000);
+    }
 
-</p>
+    startPolling();
 
-{% if session.description %}
-<p class="dl-session-description mt-3">
-{{ session.description }}
-</p>
-{% endif %}
+    window.toggleHizb = function (card) {
+        if (toggleLock) return;
 
-</div>
+        toggleLock = true;
 
-</div>
+        let id = card.dataset.id;
+        let juz = card.dataset.juz;
+        let toggleUrl = card.dataset.toggleUrl;
 
-</section>
+        fetch(toggleUrl, {
+            method: "POST",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "Accept": "application/json",
+            }
+        })
+            .then(async (r) => {
+                        const contentType = r.headers.get("content-type") || "";
 
-<section class="pb-5">
+                        if (!contentType.includes("application/json")) {
+                            const text = await r.text();
+                            console.error("Réponse non JSON reçue :", text);
+                            throw new Error("Le serveur n'a pas renvoyé du JSON.");
+                        }
 
-<div class="container">
+            return r.json();
+        })
+        
+            .then(data => {
+                card.classList.remove(
+                    "hizb-free",
+                    "hizb-assigned",
+                    "hizb-completed",
+                    "bg-white",
+                    "bg-warning-subtle",
+                    "border-warning",
+                    "bg-success-subtle",
+                    "border-success"
+                );
 
-<div class="row g-4">
+               
+     let oldBadge = card.querySelector(".hizb-status-badge");
+            if (oldBadge) oldBadge.remove();
 
-<div class="col-lg-8">
+            if (data.completed) {
+                card.classList.add("hizb-completed", "bg-success-subtle", "border-success");
+                card.insertAdjacentHTML(
+                    "beforeend",
+                    "<span class='badge bg-success hizb-status-badge mt-2'>Terminé</span>"
+                );
+            } else {
+                card.classList.add("hizb-assigned", "bg-warning-subtle", "border-warning");
+                card.insertAdjacentHTML(
+                    "beforeend",
+                    "<span class='badge bg-warning text-dark hizb-status-badge mt-2'>Terminer ce Hizb</span>"
+                );
+            }
 
-<div class="dl-card">
+            updateProgress(data);
+        })
+        .catch(error => {
+            console.error('Erreur toggleHizb:', error);
+        })
+        .finally(() => {
+            toggleLock = false;
+        });
+    }
 
-{% include 'quran_session/components/khatm_grid.html.twig' %}
+    function updateProgress(data) {
+        let percent = Math.round(
+            (data.completedCount / data.total) * 100
+        );
 
-</div>
+        const bar = document.getElementById("khatm-progress-bar");
 
-<div class="dl-card mt-4">
+        if (bar) {
+            bar.style.width = percent + "%";
+            bar.innerText = percent + "%";
+        }
 
-{% include 'quran_session/components/khatm_progress.html.twig' %}
+        let progressText = document.getElementById("khatm-progress-text");
 
-</div>
-
-</div>
-
-<div class="col-lg-4">
-
-<div class="dl-card">
-
-{% include 'quran_session/components/session_header.html.twig' %}
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<script>
-
-window.khatmConfig = {
-    sessionSlug: "{{ session.slug }}",
-    sessionStateUrl: "{{ path('app_session_state', {'slug': session.slug}) }}",
-    toggleUrlBase: "/api/hizb/toggle/"
-}
-
-</script>
-
-<script src="/js/khatmAnimation.js"></script>
-
-{% endblock %}
+        if (progressText) {
+            progressText.innerText = data.completedCount + " / " + data.total + " hizb complétés";
+        }
+    }

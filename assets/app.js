@@ -10,6 +10,7 @@ import './styles/app.scss';
 import 'bootstrap';
 import './js/khatmAnimation.js';
 import './js/sessionFormToggle.js';
+import './js/cookieBanner.js';
 
 
 // import $ from 'jquery';
