@@ -23,7 +23,7 @@ class QuranSessionFormType extends AbstractType
             // Champs communs
             // =========================
             ->add('title', TextType::class, [
-                'label' => 'Titre / Nom de la session',
+                'label' => 'Titre / Nom de la session * ',
                 'constraints' => [
                     new Assert\NotBlank(message: 'Veuillez renseigner un titre.'),
                     new Assert\Length(max: 255),
@@ -35,7 +35,7 @@ class QuranSessionFormType extends AbstractType
             ])
 
             ->add('type', ChoiceType::class, [
-                'label' => 'Type de session',
+                'label' => 'Type de session * ',
                 'choices' => [
                     'Khatm (lecture du Coran)' => 'khatm',
                     'Du‘a collective / Zikr / Khassaides' => 'dua',
@@ -52,7 +52,7 @@ class QuranSessionFormType extends AbstractType
             ])
 
             ->add('description', TextareaType::class, [
-                'label' => 'Description / Intentions',
+                'label' => 'Description / Intentions ',
                 'required' => false,
                 'constraints' => [
                     new Assert\Length(max: 2000),
@@ -65,7 +65,7 @@ class QuranSessionFormType extends AbstractType
             ])
 
             ->add('imageFile', VichImageType::class, [
-                'label' => 'Image de la session (facultatif)',
+                'label' => 'Image de la session ',
                 'required' => false,
                 'allow_delete' => false,
                 'download_uri' => false,
@@ -77,7 +77,7 @@ class QuranSessionFormType extends AbstractType
             ])
 
             ->add('scheduledAt', DateType::class, [
-                'label' => 'Date de début',
+                'label' => 'Date de début * ',
                 'widget' => 'single_text',
                 'input' => 'datetime_immutable',
                 'constraints' => [
@@ -94,7 +94,7 @@ class QuranSessionFormType extends AbstractType
             // Champs spécifiques DUA
             // =========================
             ->add('duaLabel', TextType::class, [
-                'label' => 'Zikr / Du‘a / Khassida principale',
+                'label' => 'Zikr / Du‘a / Khassida principale *',
                 'required' => false,
                 'constraints' => [
                     new Assert\Length(max: 255),
@@ -109,7 +109,7 @@ class QuranSessionFormType extends AbstractType
             ])
 
             ->add('totalTarget', IntegerType::class, [
-                'label' => 'Objectif total de répétitions',
+                'label' => 'Objectif total de répétitions *',
                 'required' => false,
                 'constraints' => [
                     new Assert\Positive(message: 'L’objectif doit être un nombre positif.'),
@@ -125,7 +125,7 @@ class QuranSessionFormType extends AbstractType
             ])
 
             ->add('expiresAt', DateType::class, [
-                'label' => 'Date de clôture souhaitée',
+                'label' => 'Date de clôture souhaitée *',
                 'required' => false,
                 'widget' => 'single_text',
                 'input' => 'datetime_immutable',

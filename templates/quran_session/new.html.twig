@@ -23,16 +23,14 @@
             {{ form_start(form, { attr: { class: 'dl-session-form', novalidate: 'novalidate' } }) }}
             {{ form_errors(form) }}
                 <div class="mb-4">
-                 * {{ form_row(form.title) }}
-                  {{ form_widget(form.title) }}
-                  {{ form_errors(form.title) }}
+                  {{ form_row(form.title) }}
+                
 
                 </div>
 
                 <div class="mb-4">
-                  *  {{ form_row(form.type) }}
-                    {{ form_widget(form.type) }}
-                    {{ form_errors(form.type) }}
+                   {{ form_row(form.type) }}
+                
                 </div>
 
                 <div id="khatm-info-block" class="dl-type-panel dl-type-panel--khatm mb-4">
@@ -48,25 +46,22 @@
                 <div id="dua-fields-block" class="dl-type-panel dl-type-panel--dua">
                     <div class="mb-4">
                         {{ form_row(form.duaLabel) }}
-                        {{ form_widget(form.duaLabel) }}
-                        {{ form_errors(form.duaLabel) }}
+                      
                     </div>
 
                     <div class="mb-4">
-                      *  {{ form_row(form.totalTarget) }}
-                        {{ form_widget(form.totalTarget) }}
-                        {{ form_errors(form.totalTarget) }}
+                       {{ form_row(form.totalTarget) }}
+                      
                     </div>
 
                     <div class="mb-4">
-                      *  {{ form_row(form.expiresAt) }}  
-                        {{ form_widget(form.expiresAt) }}
-                        {{ form_errors(form.expiresAt) }}
+                       {{ form_row(form.expiresAt) }}  
+                  
                     </div>
                 </div>
 
                 <div class="mb-4">
-                  (optionnel)  {{ form_row(form.description) }}
+               {{ form_row(form.description) }}
                 </div>
 
                 <div class="mb-4">
@@ -89,8 +84,9 @@
                 </div>
 
                 <p class="text-center text-muted small mt-3 mb-0">
-                    Vous pourrez ensuite partager le lien dans WhatsApp, Telegram ou autre. Pour permettre
-                    à chacun de participer facilement.
+                    Les champs marqués d’un * sont obligatoires. Une fois la session créée,
+                    vous pourrez la partager facilement dans WhatsApp, Telegram ou ailleurs. Les participants n’ont pas besoin de créer un compte pour rejoindre la session.
+
                 </p>
 
             {{ form_end(form) }}

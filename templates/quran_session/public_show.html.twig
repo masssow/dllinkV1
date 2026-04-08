@@ -3,29 +3,33 @@
 {% block title %}{{ session.title }} — DahiraLink{% endblock %}
 
 {% block meta_description %}
-    {% if session.description %}
+    {% if session is defined and session.description %}
         {{ session.description|striptags|u.truncate(155, '...') }}
-    {% elseif session.type == 'khatm' %}
+    {% elseif session is defined and session.type == 'khatm' %}
         Participez à ce khatm collectif sur DahiraLink.
-    {% elseif session.type == 'dua' %}
+    {% elseif session is defined and session.type == 'dua' %}
         Participez à cette session de du‘a / zikr collective sur DahiraLink.
     {% else %}
-        Participez à cette session spirituelle sur DahiraLink.
+        Avec DahiraLink - Organisez vos sessions de lecture du Quraan.
     {% endif %}
 {% endblock %}
 
 {% block og_type %}website{% endblock %}
 
 {% block og_title %}
-    {{ session.title }} — DahiraLink
+    {% if session is defined and session.title %}
+        {{ session.title }} — DahiraLink
+    {% else %}
+        DahiraLink
+    {% endif %}
 {% endblock %}
 
 {% block og_description %}
-    {% if session.description %}
+    {% if session is defined and session.description %}
         {{ session.description|striptags|u.truncate(180, '...') }}
-    {% elseif session.type == 'khatm' %}
+    {% elseif session is defined and session.type == 'khatm' %}
         Rejoignez ce khatm collectif et prenez votre part facilement.
-    {% elseif session.type == 'dua' %}
+    {% elseif session is defined and session.type == 'dua' %}
         Rejoignez cette session de du‘a / zikr collective et participez simplement.
     {% else %}
         Participez à cette session spirituelle sur DahiraLink.
@@ -33,36 +37,19 @@
 {% endblock %}
 
 {% block og_url %}
-    {{ absolute_url(path('app_quran_session_public_show', {slug: session.slug})) }}
+    {% if session is defined %}
+        {{ absolute_url(path('app_quran_session_public_show', {slug: session.slug})) }}
+    {% endif %}
 {% endblock %}
 
 {% block og_image %}
+    {% if session is defined and session.imageName %}
     {{ ogImage }}
-{% endblock %}
-
-{% block twitter_image %}
-    {{ ogImage }}
-{% endblock %}
-
-{% block twitter_description %}
-    {% if session.description %}
-        {{ session.description|striptags|u.truncate(180, '...') }}
-    {% elseif session.type == 'khatm' %}
-        Rejoignez ce khatm collectif et prenez votre part facilement.
-    {% elseif session.type == 'dua' %}
-        Rejoignez cette session de du‘a / zikr collective et participez simplement.
     {% else %}
-        Participez à cette session spirituelle sur DahiraLink.
+    {{ absolute_url(asset('images/og-default-dahiralink.png')) }}
     {% endif %}
 {% endblock %}
 
-{% block twitter_image %}
-    {% if session.imageName %}
-        {{ absolute_url(asset('uploads/sessionsCovers/' ~ session.imageName)) }}
-    {% else %}
-        {{ absolute_url(asset('images/og-default-dahiralink.png')) }}
-    {% endif %}
-{% endblock %}
 
 {% block body %}
 <div class="dl-public-session-page">

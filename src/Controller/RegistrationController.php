@@ -55,7 +55,7 @@ final class RegistrationController extends AbstractController
             // Auto-login & redirect
             try {
                 $security->login($user);
-                $this->addFlash('success', 'Bienvenue ! Votre compte a été créé.');
+                $this->addFlash('success', 'Bienvenue ! Vous êtes maintenant connecté à votre espace DahiraLink.');
                 return $this->redirectToRoute('account_profile');
             } catch (\Throwable) {
                 $this->addFlash('success', 'Compte créé. Veuillez vous connecter.');
