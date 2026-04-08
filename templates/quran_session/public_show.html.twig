@@ -44,9 +44,9 @@
 
 {% block og_image %}
     {% if session is defined and session.imageName %}
-    {{ ogImage }}
+        {{ absolute_url(asset('uploads/sessionsCovers/' ~ session.imageName)) }}
     {% else %}
-    {{ absolute_url(asset('images/og-default-dahiralink.png')) }}
+        {{ absolute_url(asset('images/og-default-dahiralink.png')) }}
     {% endif %}
 {% endblock %}
 
