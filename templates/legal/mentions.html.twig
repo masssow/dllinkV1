@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% include 'legal/_partials/_hero.html.twig' with {
+    title: "Mentions légales",
+    subtitle: "Informations légales relatives à DahiraLink."
+} %}
+
+{% include 'legal/_partials/_content_block.html.twig' with {
+    content: "
+        <h5>Éditeur du site</h5>
+        <p>
+        DahiraLink<br>
+        Projet communautaire porté par Nouroul Houda<br>
+        masssgrafik@gmail.com
+        </p>
+
+        <h5 class='mt-4'>Responsable de publication</h5>
+        <p>
+        Nouroul Houda
+        </p>
+
+        <h5 class='mt-4'>Hébergement</h5>
+        <p>
+        Hostinger International Ltd.<br>
+        61 Lordou Vironos Street, 6023 Larnaca, Chypre
+        </p>
+
+        <h5 class='mt-4'>Propriété intellectuelle</h5>
+        <p>
+        Les contenus présents sur DahiraLink (textes, visuels, structure) sont protégés.
+        Toute reproduction est interdite sans autorisation.
+        </p>
+
+        <h5 class='mt-4'>Responsabilité</h5>
+        <p>
+        DahiraLink met à disposition un outil communautaire.
+        Les utilisateurs sont responsables des contenus publiés dans les sessions.
+        </p>
+    "
+} %}
+
+{% include 'legal/_partials/_contact_block.html.twig' with {
+    owner_name: 'Nouroul Houda',
+    owner_email: 'masssgrafik@gmail.com'
+} %}
+
+{% include 'legal/_partials/_cta.html.twig' %}
+
+{% endblock %}

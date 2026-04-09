@@ -3,77 +3,92 @@
 
         <div class="row gy-4">
 
+            {# COL 1 — BRANDING #}
             <div class="col-md-4">
                 <div class="footer-brand pe-md-4">
+
                     <div class="d-flex align-items-center gap-2 mb-3">
-                        {# <img
-                            src="{{ asset('images/logo-dahiralink.png') }}"
-                            alt="DahiraLink"
-                            class="dl-footer-logo"
-                            style="max-width: 100px; height: auto;"
-                        > #}
                         <h5 class="mb-0 fw-bold">DahiraLink</h5>
                     </div>
 
                     <p class="text-muted mb-3">
-                        Une plateforme pensée pour mieux organiser les lectures collectives,
-                        les khatms et les initiatives partagées en communauté.
+                        Une plateforme pensée pour organiser simplement les lectures collectives,
+                        les khatms et les initiatives communautaires.
                     </p>
 
+
                     <p class="small text-muted mb-0">
-                        Simple à partager, facile à suivre, utile au quotidien.
+                        Projet porté par <strong>Nouroul Houda</strong>
                     </p>
+
                 </div>
             </div>
 
+            {# COL 2 — NAVIGATION #}
             <div class="col-md-4">
                 <h6 class="footer-title fw-bold mb-3">Navigation</h6>
 
                 <ul class="footer-links list-unstyled mb-0">
                     <li class="mb-2"><a href="{{ path('app_home') }}">Accueil</a></li>
-                    <li class="mb-2"><a href="{{ path('app_quran_session_new') }}">Créer un khatm</a></li>
+                    <li class="mb-2"><a href="{{ path('app_quran_session_new') }}">Créer une session</a></li>
                     <li class="mb-2"><a href="{{ path('app_about') }}">À propos</a></li>
-                    {# <li class="mb-2"><a href="{{ path('app_contact') }}">Contact</a></li> #}
+
+                    {% if app.user %}
+                        <li class="mb-2"><a href="{{ path('app_profile') }}">Mon profil</a></li>
+                        <li class="mb-2"><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                    {% else %}
+                        <li class="mb-2"><a href="{{ path('app_login') }}">Se connecter</a></li>
+                    {% endif %}
                 </ul>
             </div>
 
+            {# COL 3 — LÉGAL + CTA #}
             <div class="col-md-4">
                 <h6 class="footer-title fw-bold mb-3">Informations</h6>
 
-                <ul class="footer-links list-unstyled mb-0">
-                    {# <li class="mb-2"><a href="{{ path('app_legalicy') }}">Mentions légales</a></li> #}
-                    <li class="mb-2"><a href="{{ path('app_login') }}">Se connecter</a></li>
-                    <li class="mb-2"><a href="{{ path('app_registration') }}">Créer un compte</a></li>
+                <ul class="footer-links list-unstyled mb-3">
+                    <li class="mb-2"><a href="{{ path('app_legal_cgu') }}">Conditions d'utilisation</a></li>
+                    <li class="mb-2"><a href="{{ path('app_legal_cookies') }}">Cookies</a></li>
+                    <li class="mb-2"><a href="{{ path('app_legal_privacy') }}">Confidentialité</a></li>
+                    <li class="mb-2"><a href="{{ path('app_legal_mentions') }}">Mentions légales</a></li>
                 </ul>
+
+                {# NOUVEAU : CTA léger #}
+                {# <div class="mt-3">
+                <a href="{{ path('app_quran_session_new') }}" class="btn btn-sm w-100 dl-btn-static">
+                    Créer une session
+                </a>
+                </div> #}
             </div>
 
         </div>
 
         <hr class="my-4">
 
+        {# BAS FOOTER #}
         <div class="row gy-3 align-items-center">
+
             <div class="col-md-7">
                 <small class="text-muted d-block">
                     © {{ "now"|date("Y") }} DahiraLink — Tous droits réservés
                 </small>
+
                 <small class="text-muted d-block mt-1">
-                    Pensé avec simplicité pour accompagner les initiatives utiles de la communauté.
+                    Plateforme Islamique — usage simple et respectueux.
                 </small>
             </div>
 
-            <div class="col-md-5 text-md-end">
-                <small class="text-muted d-block">
-                    Créez, partagez et suivez vos sessions plus facilement.
-                </small>
-            </div>
+        
+
         </div>
 
+        {# CRÉDITS IMAGES #}
         <div class="text-center mt-4">
             <small class="text-muted">
                 Crédits images :
-                <a href="https://pixabay.com/fr/users/joko_narimo-3032599/" target="_blank" rel="noopener noreferrer">Joko Narimo</a>,
-                <a href="https://pixabay.com/users/abdullah_shakoor-123456/" target="_blank" rel="noopener noreferrer">Abdullah Shakoor</a>,
-                <a href="https://pixabay.com/fr/users/kolaoltion-16160874/" target="_blank" rel="noopener noreferrer">Kolaoltion</a>
+                <a href="https://pixabay.com/fr/users/joko_narimo-3032599/" target="_blank">Joko Narimo</a>,
+                <a href="https://pixabay.com/users/abdullah_shakoor-123456/" target="_blank">Abdullah Shakoor</a>,
+                <a href="https://pixabay.com/fr/users/kolaoltion-16160874/" target="_blank">Kolaoltion</a>
             </small>
         </div>
 

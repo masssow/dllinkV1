@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% include 'legal/_partials/_hero.html.twig' with {
+    title: 'Politique de confidentialité',
+    subtitle: 'Vos données sont utilisées de manière simple, transparente et limitée.'
+} %}
+
+{% include 'legal/_partials/_content_block.html.twig' with {
+    content: "
+        <h5>1. Données collectées</h5>
+        <p>Email, nom ou pseudo, contributions.</p>
+
+        <h5 class='mt-4'>2. Finalité</h5>
+        <p>Permettre le fonctionnement des sessions collectives.</p>
+
+        <h5 class='mt-4'>3. Accès via lien</h5>
+        <p>Les sessions sont accessibles à toute personne disposant du lien.</p>
+
+        <h5 class='mt-4'>4. Vos droits</h5>
+        <p>Vous pouvez demander la modification ou suppression de vos données.</p>
+    "
+} %}
+
+{% include 'legal/_partials/_contact_block.html.twig' with {
+    owner_name: 'Nouroul Houda',
+    owner_email: 'masssgrafik@gmail.com'
+} %}
+
+{% include 'legal/_partials/_cta.html.twig' %}
+
+{% endblock %}

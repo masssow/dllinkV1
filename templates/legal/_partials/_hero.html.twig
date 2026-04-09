@@ -1,0 +1,23 @@
+<section class="py-5 text-center position-relative text-white"
+    style="
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url('{{ asset(hero_image|default('images/bg-islamic-pattern.jpg')) }}') center/cover;
+    ">
+
+    <div class="container">
+        <h1 class="fw-bold">{{ title }}</h1>
+
+        {% if subtitle is defined %}
+            <p class="mt-2 text-light">{{ subtitle }}</p>
+        {% endif %}
+
+        <div class="mt-3">
+            <a href="{{ path('app_home') }}" class="btn btn-outline-light btn-sm me-2">
+                ← Accueil
+            </a>
+            <a href="{{ path('app_quran_session_new') }}" class="btn btn-success btn-sm">
+                Créer une session
+            </a>
+        </div>
+    </div>
+</section>

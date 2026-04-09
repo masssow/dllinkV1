@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% include 'legal/_partials/_hero.html.twig' with {
+    title: "Cookies",
+    subtitle: "Utilisation simple et limitée des cookies sur DahiraLink."
+} %}
+
+{% include 'legal/_partials/_content_block.html.twig' with {
+    content: "
+        <h5>1. Qu’est-ce qu’un cookie ?</h5>
+        <p>
+        Un cookie est un petit fichier stocké sur votre appareil lors de votre navigation sur un site.
+        </p>
+
+        <h5 class='mt-4'>2. Cookies utilisés</h5>
+        <p>
+        DahiraLink utilise uniquement des cookies nécessaires au fonctionnement du service.
+        </p>
+
+        <ul>
+            <li>Gestion de la session utilisateur</li>
+            <li>Sécurité (authentification, protection)</li>
+        </ul>
+
+        <h5 class='mt-4'>3. Absence de cookies publicitaires</h5>
+        <p>
+        DahiraLink n’utilise pas de cookies publicitaires ni de traceurs marketing.
+        </p>
+
+        <h5 class='mt-4'>4. Mesure d’audience</h5>
+        <p>
+        Aucune mesure d’audience intrusive n’est utilisée actuellement.
+        </p>
+
+        <h5 class='mt-4'>5. Gestion des cookies</h5>
+        <p>
+        Vous pouvez configurer votre navigateur pour refuser ou supprimer les cookies.
+        Toutefois, certaines fonctionnalités du site pourraient ne plus fonctionner correctement.
+        </p>
+
+        <h5 class='mt-4'>6. Évolution</h5>
+        <p>
+        Cette politique pourra évoluer en fonction des fonctionnalités du service.
+        </p>
+    "
+} %}
+
+{% include 'legal/_partials/_contact_block.html.twig' with {
+    owner_name: 'Nouroul Houda',
+    owner_email: 'masssgrafik@gmail.com'
+} %}
+
+{% include 'legal/_partials/_cta.html.twig' %}
+
+{% endblock %}

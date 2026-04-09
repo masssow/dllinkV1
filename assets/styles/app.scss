@@ -453,6 +453,23 @@ footer {
     text-decoration: underline;
 }
 
+.dl-btn-static {
+    background-color: #198754;
+    /* btn-success Bootstrap */
+    border-color: #198754;
+    color: #fff;
+}
+
+.dl-btn-static:hover,
+.dl-btn-static:focus,
+.dl-btn-static:active {
+    background-color: #198754 !important;
+    border-color: #198754 !important;
+    color: #fff !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
 @media (max-width: 991.98px) {
     .dl-site-header .navbar-collapse {
         background-color: #fff;

@@ -115,6 +115,12 @@
                         </div>
 
                         {{ form_widget(registrationFormType.hp) }}
+                        <p class="text-sm text-muted">
+                            En créant un compte, vous acceptez nos 
+                            <a href="{{ path('app_legal_cgu') }}">Conditions d'utilisation</a> 
+                            et notre 
+                            <a href="{{ path('app_legal_privacy') }}">Politique de confidentialité</a>.
+                        </p>
 
                         <button type="submit" class="btn btn-success btn-lg w-100 rounded-pill py-3 fw-semibold mt-2">
                             Créer mon compte
